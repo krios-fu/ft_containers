@@ -6,21 +6,28 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/01 14:28:13 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/02 20:48:36 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <utility>
 #include <iostream>
+#include "./template/utils.hpp"
 
-
-void ft_lambda ( int a)
+template <class T>
+typename ft::enable_if<ft::is_integral<T>::value,bool>::type
+	is_odd (T i)
 {
-  std::cout << a << std::endl;
+		return bool(i%2);
 }
+	
+int main()
+{
+	std::cout << std::boolalpha;
+	std::cout << "is_integral:" <<  std::endl;
+	std::cout << "char: " <<        ft::is_integral<char>::value << std::endl;
+	std::cout << "int: " << 				ft::is_integral<int>::value << std::endl;
+	std::cout << "float: " <<				ft::is_integral<float>::value << std::endl;
 
-int main() {
- 
-  ft_lambda([](int a, int b) { return a + b; });
+	std::is_integral
 }
 
