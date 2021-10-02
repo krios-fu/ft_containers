@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/02 20:48:36 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/02 22:06:48 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,5 @@ int main()
 	std::cout << "char: " <<        ft::is_integral<char>::value << std::endl;
 	std::cout << "int: " << 				ft::is_integral<int>::value << std::endl;
 	std::cout << "float: " <<				ft::is_integral<float>::value << std::endl;
-
-	std::is_integral
 }
 

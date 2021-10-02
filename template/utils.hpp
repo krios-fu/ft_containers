@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/02 20:03:24 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/02 22:07:11 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ namespace ft
 		static const bool value = is_integral;
 	};
 
-	template  < typename >
+	template < typename >
 		struct is_integral_type : public is_integral_check< false, bool> {};
 
 	template <> struct is_integral_type < bool >					: public is_integral_check < true, bool>						{};
@@ -59,7 +59,7 @@ namespace ft
 	template <> struct is_integral_type < unsigned long long int >	: public is_integral_check < true, unsigned long  long int >	{};
 
 	template <typename T>
-        struct is_integral : public is_integral_type<T> {};
+		struct is_integral : public is_integral_type<T> {};
 
 }
 #endif
