@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/02 22:07:11 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/04 15:39:47 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,31 @@ namespace ft
 
 	template <typename T>
 		struct is_integral : public is_integral_type<T> {};
+	/* Is integral end  */
+
+
+	/* Pair start */
+
+	template <class _T1, class _T2>
+	struct pair
+	{
+		typedef _T1 first_type;
+		typedef _T2 second_type;
+
+		_T1 first;
+		_T2 second;
+
+		pair() : first() , second() {};
+		pair & operator = (pair const & __p)
+		{
+			first = __p.first;
+			second = __p.second;
+			return *this;
+		}
+		
+	};
+	
+	
 
 }
 #endif
