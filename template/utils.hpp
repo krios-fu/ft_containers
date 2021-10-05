@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/06 00:14:44 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/06 00:18:06 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 namespace ft
 {
 	/*	enable_if
-	*** If B is true, std::enable_if has a public member typedef type, equal to T; otherwise, there is no member typedef.
+	***	If B is true, std::enable_if has a public member typedef type,
+	***	equal to T; otherwise, there is no member typedef.
 	***
 	*/
 
