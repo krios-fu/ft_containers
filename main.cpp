@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/04 17:46:50 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/05 15:27:19 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,24 @@
 #include "./template/utils.hpp"
 #include <utility>
 
-template <class T>
-typename ft::enable_if<ft::is_integral<T>::value,bool>::type
-	is_odd (T i)
+int main ()
 {
-		return bool(i%2);
-}
+	ft::pair<int , std::string> hola;
+	ft::pair<int , std::string> mundo;
+
 	
+
+	hola.first  = 12;
+	hola.second = "hola";
+
+	mundo = hola;
+
+	std::cout << mundo.first << " " << mundo.second << std::endl;
+	std::cout << (mundo < hola) << std::endl;
+	std::cout << (mundo  >  hola) << std::endl;
+	std::cout << (mundo <= hola ) <<std::endl;
+	std::cout << (mundo >= hola ) <<std::endl;
+	std::cout << (mundo == hola ) <<std::endl;
+	std::cout << (mundo != hola ) <<std::endl;
+
+}
