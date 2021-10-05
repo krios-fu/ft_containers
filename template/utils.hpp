@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/05 15:28:40 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/06 00:14:44 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ namespace ft
 	template < bool B, typename T = void >
 	struct enable_if{};
 	
-	template< typename T >
+	template < typename T >
 	struct enable_if< true, T >
 	{
 		typedef T type;
@@ -65,11 +65,11 @@ namespace ft
 
 	/* Pair start */
 
-	template <class _T1, class _T2>
+	template < class _T1, class _T2 >
 	struct pair
 	{
-		typedef _T1 first_type;
-		typedef _T2 second_type;
+		typedef _T1	first_type;
+		typedef _T2	second_type;
 
 		_T1 first;
 		_T2 second;
@@ -92,26 +92,27 @@ namespace ft
 		}
 		
 	};
+
 		template <class _T1, class _T2>
-		bool operator== ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
+			bool operator== ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
 			{
 				return __x.first == __y.first && __x.second == __y.second;
 			}
 
 		template <class _T1, class _T2>
-			bool operator!= ( const ft::pair < _T1, _T2>& __x, const ft::pair < _T1, _T2> & __y )
+			bool operator!= ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
 			{
 				return !( __x == __y );
 			}
 
 		template <class _T1, class _T2>
-			bool operator< ( const ft::pair < _T1, _T2>& __x, const ft::pair < _T1, _T2> & __y )
+			bool operator< ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
 			{
 				return __x.first < __y.first || ( !(__y.first < __x.first) && __x.second < __y.second );
 			}
 
 		template < class _T1, class _T2 >
-			bool operator> ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2> & __y )
+			bool operator> ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
 			{
 				return __y < __x;
 			}
@@ -127,5 +128,87 @@ namespace ft
 			{
 				return !(__y < __x);
 			}
+
+		/* End ft::pair */
+
+		/* Start ft::make_pair */
+
+		template <class _T1, class _T2>
+			ft::pair < _T1, _T2 > make_pair( _T1 __x, _T2 __y )
+			{
+				return pair< _T1, _T2 >( __x, __y );
+			}
+
+		/* End ft::make_pair */
+
+		/*	Start Ft::Equals
+		**
+		**	Compares the elements in the range [first1,last1) with those in the range beginning at first2,
+		**	and returns true if all of the elements in both ranges match.
+		**
+		*/
+
+		template < class _InputIterator1 , class _IntputIterartor2 >
+			bool equal( _InputIterator1 __first1, _InputIterator1 __last1, _IntputIterartor2 __first2)
+			{
+				for(; __first1 != __last1; __first1++, __first2++)
+					if( !(*__first1 == *__first2) )
+						return false;
+				return true;
+			}
+
+		template < class _InputIterator1 , class _IntputIterartor2, class _BinaryPredicate >
+			bool equal ( _InputIterator1 __first1, _InputIterator1 __last1,
+						_IntputIterartor2 __first2, _BinaryPredicate __pred )
+			{
+				for(; __first1 != __last1; __first1++, __first2++)
+					if( !__pred( *__first1 , *__first2 ) )
+						return false;
+				return true;
+			}
+		/* End Ft::Equals  */
+		
+
+		/* 
+		**	Start ft::lexicographical_compare v.1
+		**	Lexicographical comparison is a operation with the following properties:
+		**	Two ranges are compared element by element.
+		**	The first mismatching element defines which range is lexicographically less or greater than the other.
+		**	If one range is a prefix of another, the shorter range is lexicographically less than the other.
+		**	If two ranges have equivalent elements and are of the same length, then the ranges are lexicographically equal.
+		**	An empty range is lexicographically less than any non-empty range.
+		**	Two empty ranges are lexicographically equal.
+		*/
+
+		template < class _InputIterator1 , class _InputIterator2 >
+			bool lexicographical_compare( _InputIterator1 __first1, _InputIterator1 __last1,
+										_InputIterator2 __first2, _InputIterator1 __last2 )
+			{
+				for(; ( __first1 != __last1 ) && ( __first2 != __last2 ); __first1++, __first2++)
+				{
+					if ( *__first1 < *__first2 ) return true;
+					if ( *__first2 < *__first1 ) return false;
+				}
+				return ( __first1 == __last1) && (__first2 != __last2 );
+			}
+
+		/*
+		**  Start ft::lexicographical_compare v.2 comapre function 
+		**
+		**
+		*/
+		template < class _InputIterator1, class _InputIterator2, class _Compare >
+			bool lexicographical_compare( _InputIterator1 __first1, _InputIterator1 __last1, _InputIterator2 __first2,
+										_InputIterator2 __last2, _Compare __compare )
+			{
+				for(; ( __first1 != __last1 ) && ( __first2 != __last2 ); __first1++, __first2++ )
+				{
+					if ( __compare( *__first1, *__first2 ) ) return true;
+					if ( __compare( *__first2, *__first1 ) ) return false;
+				}
+				return ( __first1 == __last1 ) && ( __first2 != __last2 );
+			}
+
+		/*  END ft::lexicographical_compare  */
 }
 #endif

@@ -63,6 +63,8 @@
 		"ctime": "cpp",
 		"cwchar": "cpp",
 		"cwctype": "cpp",
-		"iostream": "cpp"
+		"iostream": "cpp",
+		"random": "cpp",
+		"numeric": "cpp"
 	}
 }
