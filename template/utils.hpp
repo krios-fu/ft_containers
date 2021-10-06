@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/06 00:18:06 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/06 23:51:15 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ namespace ft
 			second = __p.second;
 			return *this;
 		}
-		
 	};
 
 		template <class _T1, class _T2>
@@ -168,10 +167,9 @@ namespace ft
 				return true;
 			}
 		/* End Ft::Equals  */
-		
 
 		/* 
-		**	Start ft::lexicographical_compare v.1
+		*	Start ft::lexicographical_compare v.1
 		**	Lexicographical comparison is a operation with the following properties:
 		**	Two ranges are compared element by element.
 		**	The first mismatching element defines which range is lexicographically less or greater than the other.
@@ -211,5 +209,40 @@ namespace ft
 			}
 
 		/*  END ft::lexicographical_compare  */
+
+
+		/* 
+		**      Star iterators_traits
+		**
+		** is the type trait class that provides uniform interface
+		** to the properties of LegacyIterator types.
+		**
+		*/
+
+	
+		/*  LegacyIterator
+		**
+		** The LegacyIterator requirements describe types that can be used to identify and traverse the elements of a container.
+		** Empty class types used to indicate iterator categories
+		*/
+
+		struct input_iterator_tag {}; // LegacyInputIterator .
+		struct output_iterator_tag {}; // LegacyOutputIterator 
+		struct forward_iterator_tag : public input_iterator_tag {};  // LegacyForwardIterator
+		struct bidirectional_iterator_tag : public forward_iterator_tag {};  //  LegacyBidirectionalIterator
+		struct random_access_iterator_tag : public bidirectional_iterator_tag {}; // LegacyRandomAccessIterator
+
+		/*  Check iterator_tag*/
+
+		template <bool is_valid, typename T>
+			struct check_iterator_tag
+			{
+				typedef T type;
+				const static bool value = is_valid;
+			};
+
+			
+		
+		
 }
 #endif

@@ -65,6 +65,7 @@
 		"cwctype": "cpp",
 		"iostream": "cpp",
 		"random": "cpp",
-		"numeric": "cpp"
+		"numeric": "cpp",
+		"list": "cpp"
 	}
 }
