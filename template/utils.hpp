@@ -6,12 +6,14 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/06 23:51:15 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/07 21:17:19 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __UTILS__HPP
 # define __UTILS__HPP
+
+#include <iterator>
 
 namespace ft
 {
@@ -240,9 +242,33 @@ namespace ft
 				typedef T type;
 				const static bool value = is_valid;
 			};
+		
 
+		template< typename T>
+			struct is_input_it_tag : public check_iterator_tag <false , T> {};
+		
+		template <>
+			struct is_input_it_tag<ft::input_iterator_tag> : public check_iterator_tag<true, ft::input_iterator_tag> {};
+		
+		template <>
+			struct is_input_it_tag<ft::output_iterator_tag> : public check_iterator_tag<true, ft::output_iterator_tag> {};
+
+		template <>
+			struct is_input_it_tag<ft::forward_iterator_tag> : public check_iterator_tag<true, ft::forward_iterator_tag> {};
+		
+		template <>
+			struct is_input_it_tag<ft::bidirectional_iterator_tag> : public check_iterator_tag<true, ft::bidirectional_iterator_tag> {};
+		
+		template <>
+			struct is_input_it_tag<ft::random_access_iterator_tag> : public check_iterator_tag<true, ft::random_access_iterator_tag> {};
+
+		template< class Iterator>
+			struct iterator
+			{
+				type
+			};
 			
-		
-		
+
+
 }
 #endif
