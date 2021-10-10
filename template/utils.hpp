@@ -6,14 +6,12 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/07 21:17:19 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/10 22:55:07 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __UTILS__HPP
 # define __UTILS__HPP
-
-#include <iterator>
 
 namespace ft
 {
@@ -95,80 +93,80 @@ namespace ft
 		}
 	};
 
-		template <class _T1, class _T2>
-			bool operator== ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
-			{
-				return __x.first == __y.first && __x.second == __y.second;
-			}
+	template <class _T1, class _T2>
+		bool operator== ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
+		{
+			return __x.first == __y.first && __x.second == __y.second;
+		}
 
-		template <class _T1, class _T2>
-			bool operator!= ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
-			{
-				return !( __x == __y );
-			}
+	template <class _T1, class _T2>
+		bool operator!= ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
+		{
+			return !( __x == __y );
+		}
 
-		template <class _T1, class _T2>
-			bool operator< ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
-			{
-				return __x.first < __y.first || ( !(__y.first < __x.first) && __x.second < __y.second );
-			}
+	template <class _T1, class _T2>
+		bool operator< ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
+		{
+			return __x.first < __y.first || ( !(__y.first < __x.first) && __x.second < __y.second );
+		}
 
-		template < class _T1, class _T2 >
-			bool operator> ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
-			{
-				return __y < __x;
-			}
+	template < class _T1, class _T2 >
+		bool operator> ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2 > & __y )
+		{
+			return __y < __x;
+		}
 
-		template < class _T1, class _T2 >
-			bool operator>= ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2> & __y )
-			{
-				return !(__x < __y);
-			}
+	template < class _T1, class _T2 >
+		bool operator>= ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2> & __y )
+		{
+			return !(__x < __y);
+		}
 
-		template < class _T1, class _T2 >
-			bool operator<= ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2> & __y )
-			{
-				return !(__y < __x);
-			}
+	template < class _T1, class _T2 >
+		bool operator<= ( const ft::pair < _T1, _T2 >& __x, const ft::pair < _T1, _T2> & __y )
+		{
+			return !(__y < __x);
+		}
 
 		/* End ft::pair */
 
 		/* Start ft::make_pair */
 
-		template <class _T1, class _T2>
-			ft::pair < _T1, _T2 > make_pair( _T1 __x, _T2 __y )
-			{
-				return pair< _T1, _T2 >( __x, __y );
-			}
+	template <class _T1, class _T2>
+		ft::pair < _T1, _T2 > make_pair( _T1 __x, _T2 __y )
+		{
+			return pair< _T1, _T2 >( __x, __y );
+		}
 
 		/* End ft::make_pair */
 
-		/*	Start Ft::Equals
-		**
-		**	Compares the elements in the range [first1,last1) with those in the range beginning at first2,
-		**	and returns true if all of the elements in both ranges match.
-		**
+	/*	Start Ft::Equals
+	**
+	**	Compares the elements in the range [first1,last1) with those in the range beginning at first2,
+	**	and returns true if all of the elements in both ranges match.
+	**
 		*/
 
-		template < class _InputIterator1 , class _IntputIterartor2 >
-			bool equal( _InputIterator1 __first1, _InputIterator1 __last1, _IntputIterartor2 __first2)
-			{
-				for(; __first1 != __last1; __first1++, __first2++)
-					if( !(*__first1 == *__first2) )
-						return false;
-				return true;
-			}
+	template < class _InputIterator1 , class _IntputIterartor2 >
+		bool equal( _InputIterator1 __first1, _InputIterator1 __last1, _IntputIterartor2 __first2)
+		{
+			for(; __first1 != __last1; __first1++, __first2++)
+				if( !(*__first1 == *__first2) )
+					return false;
+			return true;
+		}
 
-		template < class _InputIterator1 , class _IntputIterartor2, class _BinaryPredicate >
-			bool equal ( _InputIterator1 __first1, _InputIterator1 __last1,
-						_IntputIterartor2 __first2, _BinaryPredicate __pred )
-			{
-				for(; __first1 != __last1; __first1++, __first2++)
-					if( !__pred( *__first1 , *__first2 ) )
-						return false;
-				return true;
-			}
-		/* End Ft::Equals  */
+	template < class _InputIterator1 , class _IntputIterartor2, class _BinaryPredicate >
+		bool equal ( _InputIterator1 __first1, _InputIterator1 __last1,
+					_IntputIterartor2 __first2, _BinaryPredicate __pred )
+		{
+			for(; __first1 != __last1; __first1++, __first2++)
+				if( !__pred( *__first1 , *__first2 ) )
+					return false;
+			return true;
+		}
+	/* End Ft::Equals  */
 
 		/* 
 		*	Start ft::lexicographical_compare v.1
@@ -181,94 +179,34 @@ namespace ft
 		**	Two empty ranges are lexicographically equal.
 		*/
 
-		template < class _InputIterator1 , class _InputIterator2 >
-			bool lexicographical_compare( _InputIterator1 __first1, _InputIterator1 __last1,
-										_InputIterator2 __first2, _InputIterator1 __last2 )
+	template < class _InputIterator1 , class _InputIterator2 >
+		bool lexicographical_compare( _InputIterator1 __first1, _InputIterator1 __last1,
+									_InputIterator2 __first2, _InputIterator1 __last2 )
+		{
+			for(; ( __first1 != __last1 ) && ( __first2 != __last2 ); __first1++, __first2++)
 			{
-				for(; ( __first1 != __last1 ) && ( __first2 != __last2 ); __first1++, __first2++)
-				{
-					if ( *__first1 < *__first2 ) return true;
-					if ( *__first2 < *__first1 ) return false;
-				}
-				return ( __first1 == __last1) && (__first2 != __last2 );
+				if ( *__first1 < *__first2 ) return true;
+				if ( *__first2 < *__first1 ) return false;
 			}
+			return ( __first1 == __last1) && (__first2 != __last2 );
+		}
 
 		/*
 		**  Start ft::lexicographical_compare v.2 comapre function 
 		**
 		**
 		*/
-		template < class _InputIterator1, class _InputIterator2, class _Compare >
-			bool lexicographical_compare( _InputIterator1 __first1, _InputIterator1 __last1, _InputIterator2 __first2,
-										_InputIterator2 __last2, _Compare __compare )
+	template < class _InputIterator1, class _InputIterator2, class _Compare >
+		bool lexicographical_compare( _InputIterator1 __first1, _InputIterator1 __last1, _InputIterator2 __first2,
+									_InputIterator2 __last2, _Compare __compare )
+		{
+			for(; ( __first1 != __last1 ) && ( __first2 != __last2 ); __first1++, __first2++ )
 			{
-				for(; ( __first1 != __last1 ) && ( __first2 != __last2 ); __first1++, __first2++ )
-				{
-					if ( __compare( *__first1, *__first2 ) ) return true;
-					if ( __compare( *__first2, *__first1 ) ) return false;
-				}
-				return ( __first1 == __last1 ) && ( __first2 != __last2 );
+				if ( __compare( *__first1, *__first2 ) ) return true;
+				if ( __compare( *__first2, *__first1 ) ) return false;
 			}
-
+			return ( __first1 == __last1 ) && ( __first2 != __last2 );
+		}
 		/*  END ft::lexicographical_compare  */
-
-
-		/* 
-		**      Star iterators_traits
-		**
-		** is the type trait class that provides uniform interface
-		** to the properties of LegacyIterator types.
-		**
-		*/
-
-	
-		/*  LegacyIterator
-		**
-		** The LegacyIterator requirements describe types that can be used to identify and traverse the elements of a container.
-		** Empty class types used to indicate iterator categories
-		*/
-
-		struct input_iterator_tag {}; // LegacyInputIterator .
-		struct output_iterator_tag {}; // LegacyOutputIterator 
-		struct forward_iterator_tag : public input_iterator_tag {};  // LegacyForwardIterator
-		struct bidirectional_iterator_tag : public forward_iterator_tag {};  //  LegacyBidirectionalIterator
-		struct random_access_iterator_tag : public bidirectional_iterator_tag {}; // LegacyRandomAccessIterator
-
-		/*  Check iterator_tag*/
-
-		template <bool is_valid, typename T>
-			struct check_iterator_tag
-			{
-				typedef T type;
-				const static bool value = is_valid;
-			};
-		
-
-		template< typename T>
-			struct is_input_it_tag : public check_iterator_tag <false , T> {};
-		
-		template <>
-			struct is_input_it_tag<ft::input_iterator_tag> : public check_iterator_tag<true, ft::input_iterator_tag> {};
-		
-		template <>
-			struct is_input_it_tag<ft::output_iterator_tag> : public check_iterator_tag<true, ft::output_iterator_tag> {};
-
-		template <>
-			struct is_input_it_tag<ft::forward_iterator_tag> : public check_iterator_tag<true, ft::forward_iterator_tag> {};
-		
-		template <>
-			struct is_input_it_tag<ft::bidirectional_iterator_tag> : public check_iterator_tag<true, ft::bidirectional_iterator_tag> {};
-		
-		template <>
-			struct is_input_it_tag<ft::random_access_iterator_tag> : public check_iterator_tag<true, ft::random_access_iterator_tag> {};
-
-		template< class Iterator>
-			struct iterator
-			{
-				type
-			};
-			
-
-
 }
 #endif
