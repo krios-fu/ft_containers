@@ -123,7 +123,7 @@ namespace ft
 			public:
 				typedef _Iter												iterator_type;
 				typedef typename iterator_traits<_Iter>::difference_Type	difference_type;
-				typedef typename iterator_traits<_Iter>::reference			refrence;
+				typedef typename iterator_traits<_Iter>::reference			reference;
 				typedef typename iterator_traits<_Iter>::pointer			pointer;
 
 				/* Default constructor  */
@@ -147,6 +147,57 @@ namespace ft
 				{
 					return current;
 				}
+
+				reference			operator*() const { _Iter __tmp = current; return *--__tmp ;}
+				pointer				operator-> () const { return &(operator*()) ;}
+
+				reverse_iterator&	operator++()		{ --current; return *this ; }
+				reverse_iterator&	operator--()		{ ++current; return *this; }
+				reverse_iterator	operator++( int )	{ reverse_iterator __tmp(+this); --current; return __tmp; }
+				reverse_iterator	operator--( int )	{ reverse_iterator __tmp(+this); ++current; return __tmp; }
+
+				reverse_iterator	operator+( difference_type __N )	const { return reverse_iterator( curren - __N ) ;}
+				reverse_iterator&	operator+=( difference_type __N )		  { curren -= __N; return *this ; }
+				reverse_iterator	operator-( difference_type __N )	const { return reverse_iterator( curren + __N ) ;}
+				reverse_iterator&	operator-=( difference_type __N )		  { curren += __N; return *this ; }
+				reference			operator[] ( difference_type __N )	const { return *(*this + __N) ; }
 		};
+
+		template< class _Iter1, class _Iter2>
+		bool operator== ( const reverse_iterator<_Iter1>& __x, const reverse_iterator<_Iter2>& __y )
+		{ 
+			return __x.base() == __y.base(); 
+		}
+
+		template < class _Iter1, class _Iter2>
+		bool operator!= ( const reverse_iterator<_Iter1>& __x, const reverse_iterator<_Iter2>&  __y )
+		{
+			return !(  __x == __y );
+		}
+
+		template < class _Iter1, class _Iter2 >
+		bool operator< ( const reverse_iterator<_Iter1>& __x, const reverse_iterator <_Iter2>& __y )
+		{
+			return __x.base() > __y.base();
+		}
+
+		template < class _Iter1, class _Iter2 >
+		bool operator > ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
+		{
+			return __y < __x;
+		}
+
+		template < class _Iter1, class _Iter2 >
+		bool operator >= ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
+		{
+			return !(__x < __y);
+		}
+
+		template < class _Iter1, class _Iter2 >
+		bool operator <= ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
+		{
+			return !(__y < __x);
+		}
+
 }
 #endif

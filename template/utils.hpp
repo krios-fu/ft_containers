@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/10 22:55:07 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/11 21:25:39 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ namespace ft
 			return !(__y < __x);
 		}
 
+		
 		/* End ft::pair */
 
 		/* Start ft::make_pair */
@@ -209,4 +210,4 @@ namespace ft
 		}
 		/*  END ft::lexicographical_compare  */
 }
-#endif
+#endif 
