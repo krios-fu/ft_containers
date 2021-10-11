@@ -143,18 +143,15 @@ namespace ft
 						__t = current = __other.base();
 						return *this;
 					}
-				_Iter base const()
-				{
-					return current;
-				}
+				_Iter base const() { return current; }
 
 				reference			operator*() const { _Iter __tmp = current; return *--__tmp ;}
 				pointer				operator-> () const { return &(operator*()) ;}
 
 				reverse_iterator&	operator++()		{ --current; return *this ; }
 				reverse_iterator&	operator--()		{ ++current; return *this; }
-				reverse_iterator	operator++( int )	{ reverse_iterator __tmp(+this); --current; return __tmp; }
-				reverse_iterator	operator--( int )	{ reverse_iterator __tmp(+this); ++current; return __tmp; }
+				reverse_iterator	operator++( int )	{ reverse_iterator __tmp( *this ); --current; return __tmp; }
+				reverse_iterator	operator--( int )	{ reverse_iterator __tmp( *this ); ++current; return __tmp; }
 
 				reverse_iterator	operator+( difference_type __N )	const { return reverse_iterator( curren - __N ) ;}
 				reverse_iterator&	operator+=( difference_type __N )		  { curren -= __N; return *this ; }
@@ -162,6 +159,20 @@ namespace ft
 				reverse_iterator&	operator-=( difference_type __N )		  { curren += __N; return *this ; }
 				reference			operator[] ( difference_type __N )	const { return *(*this + __N) ; }
 		};
+
+		template< class _Iter1, class _Iter2>
+		typename ft::reverse_iterator<_Iter1>::difference_type
+			operator-( const reverse_iterator<_Iter1>& __x , const reverse_iterator<_Iter2>& __y )
+			{
+				return __y.base() - __x.base() ;
+			}
+
+		template< class _Iter>
+		typename ft::reverse_iterator<_Iter>::difference_type
+			operator+( typename reverse_iterator<_Iter>::difference_type __N , const reverse_iterator<_Iter>& __x )
+			{
+				return  ft::reverse_iterator<_Iter> ( __x.base() - __N ) ;
+			}
 
 		template< class _Iter1, class _Iter2>
 		bool operator== ( const reverse_iterator<_Iter1>& __x, const reverse_iterator<_Iter2>& __y )
@@ -178,7 +189,7 @@ namespace ft
 		template < class _Iter1, class _Iter2 >
 		bool operator< ( const reverse_iterator<_Iter1>& __x, const reverse_iterator <_Iter2>& __y )
 		{
-			return __x.base() > __y.base();
+			return __x.base() < __y.base();
 		}
 
 		template < class _Iter1, class _Iter2 >

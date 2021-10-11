@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/11 21:34:14 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/11 21:59:45 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int main()
    std::cout << ft::distance(__first, __last) << std::endl;
    std::cout << std::distance(__first, __last) << std::endl;
 
-    
 
  
 //    std::istreambuf_iterator<char> i1(std::cin), i2;
