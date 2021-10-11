@@ -34,25 +34,25 @@ namespace ft
 		};
 	
 
-	template< typename T>
+	template< typename T >
 		struct is_input_it_tag : public check_iterator_tag <false , T> {};
 		
-	template <>
+	template<>
 		struct is_input_it_tag<ft::input_iterator_tag> : public check_iterator_tag<true, ft::input_iterator_tag> {};
 		
-	template <>
+	template<>
 		struct is_input_it_tag<ft::output_iterator_tag> : public check_iterator_tag<true, ft::output_iterator_tag> {};
 
-	template <>
+	template<>
 		struct is_input_it_tag<ft::forward_iterator_tag> : public check_iterator_tag<true, ft::forward_iterator_tag> {};
 		
-	template <>
+	template<>
 		struct is_input_it_tag<ft::bidirectional_iterator_tag> : public check_iterator_tag<true, ft::bidirectional_iterator_tag> {};
 		
-	template <>
+	template<>
 		struct is_input_it_tag<ft::random_access_iterator_tag> : public check_iterator_tag<true, ft::random_access_iterator_tag> {};
 
-	template< class _Iter>
+	template< class _Iter >
 		struct iterator_traits
 		{
 			typedef typename _Iter::difference_type		difference_type;
@@ -146,18 +146,18 @@ namespace ft
 				_Iter base const() { return current; }
 
 				reference			operator*() const { _Iter __tmp = current; return *--__tmp ;}
-				pointer				operator-> () const { return &(operator*()) ;}
+				pointer				operator->() const { return &(operator*()) ;}
 
 				reverse_iterator&	operator++()		{ --current; return *this ; }
 				reverse_iterator&	operator--()		{ ++current; return *this; }
 				reverse_iterator	operator++( int )	{ reverse_iterator __tmp( *this ); --current; return __tmp; }
 				reverse_iterator	operator--( int )	{ reverse_iterator __tmp( *this ); ++current; return __tmp; }
 
-				reverse_iterator	operator+( difference_type __N )	const { return reverse_iterator( curren - __N ) ;}
-				reverse_iterator&	operator+=( difference_type __N )		  { curren -= __N; return *this ; }
-				reverse_iterator	operator-( difference_type __N )	const { return reverse_iterator( curren + __N ) ;}
-				reverse_iterator&	operator-=( difference_type __N )		  { curren += __N; return *this ; }
-				reference			operator[] ( difference_type __N )	const { return *(*this + __N) ; }
+				reverse_iterator	operator+ ( difference_type __N ) const { return reverse_iterator( curren - __N );}
+				reverse_iterator&	operator+=( difference_type __N )		{ curren -= __N; return *this ; }
+				reverse_iterator	operator- ( difference_type __N ) const { return reverse_iterator( curren + __N );}
+				reverse_iterator&	operator-=( difference_type __N )		{ curren += __N; return *this ; }
+				reference			operator[]( difference_type __N ) const { return *(*this + __N) ; }
 		};
 
 		template< class _Iter1, class _Iter2>
@@ -193,19 +193,19 @@ namespace ft
 		}
 
 		template < class _Iter1, class _Iter2 >
-		bool operator > ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
+		bool operator> ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
 		{
 			return __y < __x;
 		}
 
 		template < class _Iter1, class _Iter2 >
-		bool operator >= ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
+		bool operator>= ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
 		{
 			return !(__x < __y);
 		}
 
 		template < class _Iter1, class _Iter2 >
-		bool operator <= ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
+		bool operator<= ( const reverse_iterator<_Iter1>& __x , const reverse_iterator <_Iter2>& __y )
 		{
 			return !(__y < __x);
 		}
