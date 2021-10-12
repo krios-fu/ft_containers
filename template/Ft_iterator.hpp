@@ -150,14 +150,14 @@ namespace ft
 
 				reverse_iterator&	operator++()		{ --current; return *this ; }
 				reverse_iterator&	operator--()		{ ++current; return *this; }
-				reverse_iterator	operator++( int )	{ reverse_iterator __tmp( *this ); --current; return __tmp; }
-				reverse_iterator	operator--( int )	{ reverse_iterator __tmp( *this ); ++current; return __tmp; }
+				reverse_iterator	operator++( int )	{ reverse_iterator __tmp( *this ); --current; return __tmp;}
+				reverse_iterator	operator--( int )	{ reverse_iterator __tmp( *this ); ++current; return __tmp;}
 
 				reverse_iterator	operator+ ( difference_type __N ) const { return reverse_iterator( curren - __N );}
 				reverse_iterator&	operator+=( difference_type __N )		{ curren -= __N; return *this ; }
 				reverse_iterator	operator- ( difference_type __N ) const { return reverse_iterator( curren + __N );}
-				reverse_iterator&	operator-=( difference_type __N )		{ curren += __N; return *this ; }
-				reference			operator[]( difference_type __N ) const { return *(*this + __N) ; }
+				reverse_iterator&	operator-=( difference_type __N )		{ curren += __N; return *this ;}
+				reference			operator[]( difference_type __N ) const { return *(*this + __N) ;}
 		};
 
 		template< class _Iter1, class _Iter2>
