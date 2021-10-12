@@ -5,7 +5,7 @@
 namespace ft
 {
 		/* 
-		**      Star iterators_traits
+		**    Star iterators_traits
 		**
 		** is the type trait class that provides uniform interface
 		** to the properties of LegacyIterator types.
