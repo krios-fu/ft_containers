@@ -6,14 +6,11 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/12 21:45:43 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/10/13 23:14:56 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <vector>
-#include <list>
-#include "./utility/utils.hpp"
+#include "./containers/vector.hpp"
 // #include "./utils.hpp"
  
 /* // quite often implementation details are hidden in a dedicated namespace
@@ -40,18 +37,21 @@ void alg(Iter first, Iter last)
  
 int main()
 {
-    std::vector<int> v;
 
-    v.push_back(42);
-    v.push_back(12);
-    v.push_back(21);
-    v.push_back(23);
 
-    std::vector<int>::iterator __first = v.begin();
-    std::vector<int>::iterator __last = v.end();
+    ft::vector<int> a();
+    // std::vector<int> v;
 
-   std::cout << ft::distance(__first, __last) << std::endl;
-   std::cout << std::distance(__first, __last) << std::endl;
+    // v.push_back(42);
+    // v.push_back(12);
+    // v.push_back(21);
+    // v.push_back(23);
+
+    // std::vector<int>::iterator __first = v.begin();
+    // std::vector<int>::iterator __last = v.end();
+
+//    std::cout << ft::distance(__first, __last) << std::endl;
+//    std::cout << std::distance(__first, __last) << std::endl;
 
 
  

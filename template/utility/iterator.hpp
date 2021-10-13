@@ -143,7 +143,7 @@ namespace ft
 						__t = current = __other.base();
 						return *this;
 					}
-				_Iter base const() { return current; }
+				_Iter base() const{ return current; }
 
 				reference			operator*() const { _Iter __tmp = current; return *--__tmp ;}
 				pointer				operator->() const { return &(operator*()) ;}
@@ -153,10 +153,10 @@ namespace ft
 				reverse_iterator	operator++( int )	{ reverse_iterator __tmp( *this ); --current; return __tmp;}
 				reverse_iterator	operator--( int )	{ reverse_iterator __tmp( *this ); ++current; return __tmp;}
 
-				reverse_iterator	operator+ ( difference_type __N ) const { return reverse_iterator( curren - __N );}
-				reverse_iterator&	operator+=( difference_type __N )		{ curren -= __N; return *this ; }
-				reverse_iterator	operator- ( difference_type __N ) const { return reverse_iterator( curren + __N );}
-				reverse_iterator&	operator-=( difference_type __N )		{ curren += __N; return *this ;}
+				reverse_iterator	operator+ ( difference_type __N ) const { return reverse_iterator( current - __N );}
+				reverse_iterator&	operator+=( difference_type __N )		{ current -= __N; return *this ; }
+				reverse_iterator	operator- ( difference_type __N ) const { return reverse_iterator( current + __N );}
+				reverse_iterator&	operator-=( difference_type __N )		{ current += __N; return *this ;}
 				reference			operator[]( difference_type __N ) const { return *(*this + __N) ;}
 		};
 
@@ -239,7 +239,7 @@ namespace ft
 
 	virtual ~random_access_iterator(){}
 
-			random_access_iterator & operator=( const random_access_iterator<_Up>& __u )
+			random_access_iterator & operator=( const random_access_iterator& __u )
 			{
 				if (this == &__u)
 					return *this;
@@ -258,8 +258,8 @@ namespace ft
 			random_access_iterator operator++ ( int ) { random_access_iterator __tmp( *this ); ++__i; return __tmp;}
 			random_access_iterator operator-- ( int ) { random_access_iterator __tmp( *this ); --__i; return __tmp;}
 
-			random_access_iterator operator+ ( difference_type __N ) const { return reverse_iterator( __i + __N ); }
-			random_access_iterator operator- ( difference_type __N ) const { return reverse_iterator( __i - __N ); }
+			random_access_iterator operator+ ( difference_type __N ) const { random_access_iterator __w(*this); __w += __N; return __w; }
+			random_access_iterator operator- ( difference_type __N ) const { return *this += -__N ;}
 
 			random_access_iterator& operator+= ( difference_type __N ) { __i + __N; return *this; }
 			random_access_iterator& operator-= ( difference_type __N ) { __i - __N; return *this; }
