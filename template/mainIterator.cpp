@@ -6,11 +6,13 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/13 23:14:56 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/11/25 04:58:49 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./containers/vector.hpp"
+
+#include <string>
 // #include "./utils.hpp"
  
 /* // quite often implementation details are hidden in a dedicated namespace
@@ -39,7 +41,69 @@ int main()
 {
 
 
-    ft::vector<int> a();
+     ft::vector<int> b(10);
+
+
+     std::string ft (12, '4');
+
+        int f[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11 , 24 };
+         ft::vector<int> c (&f[0], &f[12]);
+
+{
+        ft::vector<int>::iterator start = c.begin();
+        ft::vector<int>::iterator end = c.end();
+
+        for (; start != end ; start++ )
+        {
+            std::cout << " --> " << *start << std::endl;
+        }
+
+        std::cout << "MAX SIZE :" << c.max_size() << std::endl ;
+        std::cout << "SIZE :" << c.size() << std::endl ;
+        std::cout << "CAPACITY :" << c.capacity() << std::endl ;
+
+        ft::vector<char> a(42);
+
+        a.assign(12, 'a');
+
+        ft::vector<char>::iterator start2 = a.begin();
+        ft::vector<char>::iterator end2 = a.end();
+
+        for (; start2 != end2 ; start2++ )
+        {
+            std::cout << " --> " << *start2 << std::endl;
+        }
+        std::cout << "MAX SIZE :" << a.max_size() << std::endl ;
+        std::cout << "SIZE :" << a.size() << std::endl ;
+        std::cout << "CAPACITY :" << a.capacity() << std::endl ;
+        
+}
+        std::vector<char> a(42);
+
+        a.assign(12, 'a');
+
+        std::vector<char>::iterator start2 = a.begin();
+        std::vector<char>::iterator end2 = a.end();
+
+        for (; start2 != end2 ; start2++ )
+        {
+            std::cout << " ** " << *start2 << std::endl;
+        }
+        std::cout << "MAX SIZE :" << a.max_size() << std::endl ;
+        std::cout << "SIZE :" << a.size() << std::endl ;
+
+        std::cout << "CAPACITY :" << a.capacity() << std::endl ;
+
+
+        
+
+
+
+
+
+    // ft::is_integral<int>::type a = 12;
+
+    // std::cout << a << std::endl;
     // std::vector<int> v;
 
     // v.push_back(42);

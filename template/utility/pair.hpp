@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 21:06:35 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/12 21:07:27 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/11/24 18:53:55 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ namespace ft
 	template <class _T1, class _T2>
 		ft::pair < _T1, _T2 > make_pair( _T1 __x, _T2 __y )
 		{
-			return pair< _T1, _T2 >( __x, __y );
+			return ft::pair< _T1, _T2 >( __x, __y );
 		}
 
 		/* End ft::make_pair */

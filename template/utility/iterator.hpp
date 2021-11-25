@@ -2,6 +2,7 @@
 # define __FT_ITERATOR_HPP
 
 #include <vector>
+#include <iostream>
 namespace ft
 {
 		/* 
@@ -99,9 +100,8 @@ namespace ft
 		typename ft::iterator_traits< _InputIter >::difference_type
 			distance( _InputIter __first, _InputIter __last )
 			{
-				typename ft::iterator_traits<_InputIter>::difference_type __r(0);
-				for( ; __first != __last; ++__first)
-					++__r;
+				typename ft::iterator_traits<_InputIter>::difference_type __r(__last - __first);
+				// __r = ;
 				return __r;
 			}
 	
@@ -121,10 +121,10 @@ namespace ft
 			protected:
 				_Iter  current;
 			public:
-				typedef _Iter												iterator_type;
-				typedef typename iterator_traits<_Iter>::difference_Type	difference_type;
-				typedef typename iterator_traits<_Iter>::reference			reference;
-				typedef typename iterator_traits<_Iter>::pointer			pointer;
+				typedef _Iter													iterator_type;
+				typedef typename ft::iterator_traits<_Iter>::difference_Type	difference_type;
+				typedef typename ft::iterator_traits<_Iter>::reference			reference;
+				typedef typename ft::iterator_traits<_Iter>::pointer			pointer;
 
 				/* Default constructor  */
 				reverse_iterator() : __t() , current() {}
