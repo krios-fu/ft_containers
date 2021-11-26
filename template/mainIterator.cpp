@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/11/25 04:58:49 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/11/26 05:24:46 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,21 @@ int main()
 {
 
 
-     ft::vector<int> b(10);
+    //  ft::vector<int> b(10);
 
 
-     std::string ft (12, '4');
+    //  std::string ft (12, '4');
 
-        int f[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11 , 24 };
-         ft::vector<int> c (&f[0], &f[12]);
+    //     int f[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 , 11 , 24 };
+    //      ft::vector<int> c (&f[0], &f[12]);
 
 {
-        ft::vector<int>::iterator start = c.begin();
-        ft::vector<int>::iterator end = c.end();
+        ft::vector<int> a(42);
 
-        for (; start != end ; start++ )
-        {
-            std::cout << " --> " << *start << std::endl;
-        }
+        a.assign(12, 42);
 
-        std::cout << "MAX SIZE :" << c.max_size() << std::endl ;
-        std::cout << "SIZE :" << c.size() << std::endl ;
-        std::cout << "CAPACITY :" << c.capacity() << std::endl ;
-
-        ft::vector<char> a(42);
-
-        a.assign(12, 'a');
-
-        ft::vector<char>::iterator start2 = a.begin();
-        ft::vector<char>::iterator end2 = a.end();
+        ft::vector<int>::iterator start2 = a.begin();
+        ft::vector<int>::iterator end2 = a.end();
 
         for (; start2 != end2 ; start2++ )
         {
@@ -76,14 +64,22 @@ int main()
         std::cout << "MAX SIZE :" << a.max_size() << std::endl ;
         std::cout << "SIZE :" << a.size() << std::endl ;
         std::cout << "CAPACITY :" << a.capacity() << std::endl ;
+
+        ft::vector<char> cadena (42);
+        const std::string extra(6, 'b');
+        //  cadena.assign(extra.begin(), extra.end());
+        cadena.reserve(100);
         
+        std::cout << "MAX SIZE :" << a.max_size() << std::endl ;
+        std::cout << "SIZE :" << a.size() << std::endl ;
+        std::cout << "CAPACITY :" << a.capacity() << std::endl ;
 }
-        std::vector<char> a(42);
+         std::vector<int> a(42);
 
-        a.assign(12, 'a');
+        a.assign(12, 42);
 
-        std::vector<char>::iterator start2 = a.begin();
-        std::vector<char>::iterator end2 = a.end();
+        std::vector<int>::iterator start2 = a.begin();
+        std::vector<int>::iterator end2 = a.end();
 
         for (; start2 != end2 ; start2++ )
         {
@@ -96,7 +92,7 @@ int main()
 
 
         
-
+ 
 
 
 

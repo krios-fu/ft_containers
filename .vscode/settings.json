@@ -64,6 +64,15 @@
 		"streambuf": "cpp",
 		"system_error": "cpp",
 		"tuple": "cpp",
-		"typeinfo": "cpp"
+		"typeinfo": "cpp",
+		"__functional_base_03": "cpp",
+		"__memory": "cpp",
+		"list": "cpp",
+		"__tree": "cpp",
+		"deque": "cpp",
+		"map": "cpp",
+		"queue": "cpp",
+		"set": "cpp",
+		"stack": "cpp"
 	}
 }
