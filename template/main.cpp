@@ -6,45 +6,76 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/11/12 22:32:15 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/11/27 02:54:11 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include "./utility/utils.hpp"
-#include <utility>
-#include <algorithm>
-#include <vector>
-#include <random>
+// #include "./utility/utils.hpp"
+// #include <utility>
+// #include <algorithm>
+// #include <vector>
+// #include <random>
 
 
 
 
 
-template <unsigned  int  N>
-struct  factorial
+// template <unsigned  int  N>
+// struct  factorial
+// {
+// 	enum
+// 	{
+// 		data = N * factorial<N -1 >::data
+// 	};
+// };
+
+// template <>
+// struct  factorial<0>
+// {
+// 	enum
+// 	{
+// 		data = 1
+// 	};
+// };
+
+/* 
+template<typename T, typename U>
+struct ft 
 {
 	enum
 	{
-		data = N * factorial<N -1 >::data
+		value = ft<T + U >::value
 	};
+	
 };
 
-template <>
-struct  factorial<0>
+template<typename U = int>
+struct ft <int, U> 
 {
 	enum
 	{
-		data = 1
+		value = ft<U>::value
 	};
+	
+};
+
+template<>
+struct ft<bool, bool > 
+{
+	enum
+	{
+		value = ft<bool, bool>::value
+	};
+	
 };
 
 
 
 int main ()
 {
-	std::cout << factorial<9>::data  / factorial<5>::data<< std::endl;
-}
+	std::cout << ft<>::value;
+} */
 
 // bool mypredicate (int i, int j) {
 //   return (i==j);

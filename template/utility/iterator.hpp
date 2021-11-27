@@ -1,8 +1,8 @@
 #ifndef __FT_ITERATOR_HPP
 # define __FT_ITERATOR_HPP
 
-#include <vector>
-#include <iostream>
+
+#include "./nullptr.hpp"
 namespace ft
 {
 		/* 
@@ -21,9 +21,9 @@ namespace ft
 
 	struct input_iterator_tag {}; // LegacyInputIterator .
 	struct output_iterator_tag {}; // LegacyOutputIterator 
-	struct forward_iterator_tag : public input_iterator_tag {};  // LegacyForwardIterator
-	struct bidirectional_iterator_tag : public forward_iterator_tag {};  //  LegacyBidirectionalIterator
-	struct random_access_iterator_tag : public bidirectional_iterator_tag {}; // LegacyRandomAccessIterator
+	struct forward_iterator_tag			: public input_iterator_tag {};  // LegacyForwardIterator
+	struct bidirectional_iterator_tag	: public forward_iterator_tag {};  //  LegacyBidirectionalIterator
+	struct random_access_iterator_tag	: public bidirectional_iterator_tag {}; // LegacyRandomAccessIterator
 
 		/*  Check iterator_tag*/
 
@@ -52,6 +52,12 @@ namespace ft
 		
 	template<>
 		struct is_input_it_tag<ft::random_access_iterator_tag> : public check_iterator_tag<true, ft::random_access_iterator_tag> {};
+
+
+	template< typename T >
+		struct __is_forward_iterator: public check_iterator_tag <false , T> {};
+	template<>
+		struct __is_forward_iterator <ft::forward_iterator_tag> : public check_iterator_tag<true, ft::forward_iterator_tag> {};
 
 	template< class _Iter >
 		struct iterator_traits
@@ -225,11 +231,11 @@ namespace ft
 				typedef typename iterator_traits<iterator_type>::reference				reference;
 
 			private:
-				iterator_type __i;
+				pointer __i;
 				
 			public:
 
-			random_access_iterator(){}
+			random_access_iterator() : __i( ft::nullptr_t ){}
 	
 			template <class _Up>
 				random_access_iterator( const random_access_iterator<_Up>&__u )
@@ -258,7 +264,7 @@ namespace ft
 			random_access_iterator operator++ ( int ) { random_access_iterator __tmp( *this ); ++__i; return __tmp;}
 			random_access_iterator operator-- ( int ) { random_access_iterator __tmp( *this ); --__i; return __tmp;}
 
-			random_access_iterator operator+ ( difference_type __N ) const { random_access_iterator __w(*this); __w += __N; return __w; }
+			random_access_iterator operator+ ( difference_type __N ) const { return  __i  + __N; }
 			random_access_iterator operator- ( difference_type __N ) const { return *this += -__N ;}
 
 			random_access_iterator& operator+= ( difference_type __N ) { __i + __N; return *this; }
