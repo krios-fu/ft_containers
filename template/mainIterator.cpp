@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/11/27 05:00:13 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/11/28 05:40:00 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,72 +37,50 @@ void alg(Iter first, Iter last)
 		typename std::iterator_traits<Iter>::iterator_category());
 } */
  
+#include <cstddef>
+#include <iostream>
+#include <span>
+#include <vector>
+ 
+void pointer_func(const int* p, std::size_t size)
+{
+    std::cout << "data = ";
+    for (std::size_t i = 0; i < size; ++i)
+        std::cout << p[i] << ' ';
+    std::cout << '\n';
+}
+ 
+
+ 
 int main()
 {
+    ft::vector<int> container;
 
-	ft::vector<std::string> cadena;
+	container.push_back(42);
+	container.push_back(21);
+	container.push_back(12);
+	container.push_back(42);
 
-	cadena.push_back("HOLA MUNDO");
-	cadena.push_back("HOLA");
-	cadena.push_back("MUNDO");
-	cadena.push_back("HOLAMUNDO");
-	cadena.push_back("HOLA----MUNDO");
-	cadena.push_back("HOLA*MUNDO");
-	cadena.push_back("HOLA******MUNDO");
-	cadena.push_back("HOLA_____MUNDO");
+
+
+ 
+    // Prefer container.data() over &container[0]
+    pointer_func(container.data(), container.size());
+
+	std::cout << container.at(3) << std::endl;
 	
+	container.pop_back();
+	container.pop_back();
+	container.pop_back();
+	container.pop_back();
 
-{
-	ft::vector<std::string> a;
+
+
+
+	std::cout << container.size() << std::endl;
+
 	
-	ft::vector<int> b;
-
-	int array [] = { 42, 3, 12, 21 , 24 };
-
-	ft::vector<std::string>::iterator first = cadena.begin();
-	ft::vector<std::string>::iterator last = cadena.end();
-
-	ft::vector<int>::iterator it_array(&(array[0]));
-
-	 std::cout << "*** " << std::endl;
-
-
-		a.assign(first, last);
-		b.assign(it_array, it_array + 5);
-
-	  {
-		  	ft::vector<int>::iterator first = b.begin();
-			ft::vector<int>::iterator last = b.end();
-			for ( ; first != last; ++first )
-			{
-				std::cout << *first << std::endl;
-			}
-	  }
-
-	{
-			ft::vector<std::string>::iterator first = a.begin();
-			ft::vector<std::string>::iterator last = a.end();
-			ft::vector<std::string> ft(first, last);
-			ft::vector<std::string>::iterator first2 = ft.begin();
-			ft::vector<std::string>::iterator last2= ft.end();
-			
-			for ( ; first2 != last2; ++first2 )
-			{
-				std::cout << *first2 << std::endl;
-			}
-	}
-
-}
-
-{
-	// std::vector<std::string> a;
-
-	// std::vector<std::string>::iterator first = cadena.begin();
-	// std::vector<std::string>::iterator last = cadena.end();
-
-	// a.assign(first, last);
-	
-}
-
-
+ 
+    // std::span (C++20) is a safer alternative to separated pointer/size.
+    // span_func({container.data(), container.size()});
 }
