@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/11/28 05:40:00 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/11/30 21:37:19 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,46 +41,53 @@ void alg(Iter first, Iter last)
 #include <iostream>
 #include <span>
 #include <vector>
+#include <typeinfo>
  
-void pointer_func(const int* p, std::size_t size)
+/* void pointer_func(const int* p, std::size_t size)
 {
     std::cout << "data = ";
     for (std::size_t i = 0; i < size; ++i)
         std::cout << p[i] << ' ';
     std::cout << '\n';
-}
+} */
  
 
  
 int main()
 {
-    ft::vector<int> container;
 
-	container.push_back(42);
-	container.push_back(21);
-	container.push_back(12);
-	container.push_back(42);
-
-
-
- 
-    // Prefer container.data() over &container[0]
-    pointer_func(container.data(), container.size());
-
-	std::cout << container.at(3) << std::endl;
+	int array [] = {0, 1 , 2, 3 ,4 ,5 , 6 , 7 , 8 ,9 };
 	
-	container.pop_back();
-	container.pop_back();
-	container.pop_back();
-	container.pop_back();
+	ft::vector<int> v(array, array + 10);
 
-
-
-
-	std::cout << container.size() << std::endl;
-
+{
 	
- 
-    // std::span (C++20) is a safer alternative to separated pointer/size.
-    // span_func({container.data(), container.size()});
+	ft::vector<int>::iterator start = v.begin();
+	ft::vector<int>::iterator end = v.end();
+
+	for (; start != end ; ++start )
+		std::cout << "--> " << *start << std::endl;
+
 }
+
+
+{
+	std::cout << "size --> " << v.size() << " Cap --> " << v.capacity() <<std::endl;
+
+	v.clear();
+
+	std::cout << "size --> " << v.size() << " Cap --> " << v.capacity() <<std::endl;
+
+	ft::vector<int>::iterator start = v.begin();
+	ft::vector<int>::iterator end = v.end();
+
+	for (; start != end ; ++start )
+		std::cout << "--> " << *start << std::endl;
+
+}
+	
+
+}
+
+
+

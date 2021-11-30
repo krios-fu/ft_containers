@@ -230,8 +230,9 @@ namespace ft
 				typedef typename iterator_traits<iterator_type>::pointer				pointer;
 				typedef typename iterator_traits<iterator_type>::reference				reference;
 
-			private:
+			protected:
 				pointer __i;
+	
 				
 			public:
 
@@ -316,6 +317,6 @@ namespace ft
 			__x += __N;
 			return __x;
 		}
-		/* Finish  Ramdom_assccess_iterator */
+
 }
 #endif
