@@ -106,8 +106,7 @@ namespace ft
 		typename ft::iterator_traits< _InputIter >::difference_type
 			distance( _InputIter __first, _InputIter __last )
 			{
-				typename ft::iterator_traits<_InputIter>::difference_type __r(__last - __first);
-				// __r = ;
+				typename ft::iterator_traits<_InputIter>::difference_type __r( __last - __first );
 				return __r;
 			}
 	
@@ -242,7 +241,7 @@ namespace ft
 				random_access_iterator( const random_access_iterator<_Up>&__u )
 					: __i( __u.base() ) {}
 
-			random_access_iterator( const iterator_type & __it) : __i(__it) {}
+			random_access_iterator( const iterator_type & __it ) : __i( __it ) {}
 
 	virtual ~random_access_iterator(){}
 

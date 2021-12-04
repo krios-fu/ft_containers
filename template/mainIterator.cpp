@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/11/30 21:37:19 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/04 05:38:34 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,42 +52,39 @@ void alg(Iter first, Iter last)
 } */
  
 
- 
+
 int main()
 {
-
-	int array [] = {0, 1 , 2, 3 ,4 ,5 , 6 , 7 , 8 ,9 };
-	
-	ft::vector<int> v(array, array + 10);
-
-{
-	
-	ft::vector<int>::iterator start = v.begin();
-	ft::vector<int>::iterator end = v.end();
-
-	for (; start != end ; ++start )
-		std::cout << "--> " << *start << std::endl;
-
-}
+		int array [] = { 100, 101, 102, 103 , 104};
+	{
+		ft::vector<int> lol;
 
 
-{
-	std::cout << "size --> " << v.size() << " Cap --> " << v.capacity() <<std::endl;
 
-	v.clear();
+		lol.insert(lol.begin(), 8, 42 );
+		lol.insert(lol.begin(), 21);
+		lol.insert(lol.begin() + 6, 21);
+		lol.insert(lol.begin() + 6, 8, 12 );
+		lol.insert(lol.end(), 42, 7 );
 
-	std::cout << "size --> " << v.size() << " Cap --> " << v.capacity() <<std::endl;
+		lol.insert(lol.begin(), array, array + 5 );
 
-	ft::vector<int>::iterator start = v.begin();
-	ft::vector<int>::iterator end = v.end();
 
-	for (; start != end ; ++start )
-		std::cout << "--> " << *start << std::endl;
 
-}
-	
+
+		ft::vector<int>::iterator start = lol.begin();
+		ft::vector<int>::iterator end = lol.end();
+
+		for(; start != end ; ++start )
+			std::cout << *start << std::endl;
+
+			std::cout << " " << lol.size() << " " << lol.capacity() << std::endl;
+
+		ft::vector<int> lol2( lol );
+
+		std::cout << "*** " <<(lol2 == lol) << std::endl ;
+	}
 
 }
-
 
 
