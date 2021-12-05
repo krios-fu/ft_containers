@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/11/27 02:54:11 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/05 01:00:58 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,57 @@
 
 
 
-// template <unsigned  int  N>
-// struct  factorial
-// {
-// 	enum
-// 	{
-// 		data = N * factorial<N -1 >::data
-// 	};
-// };
-
-// template <>
-// struct  factorial<0>
-// {
-// 	enum
-// 	{
-// 		data = 1
-// 	};
-// };
 
 /* 
-template<typename T, typename U>
+template < typename T>
+void print (T a )
+{
+	std::cout << a  << std::endl;
+}
+
+
+
+int main ()
+{
+	std::string a("hola");
+
+	int b (9);
+
+	char c('c');
+
+
+	print(a);
+	print(b);
+	print(c);
+
+	
+} */
+
+template <unsigned  int  N>
+struct  factorial
+{
+	enum
+	{
+		data = N * factorial<N -1 >::data
+	};
+};
+
+template <>
+struct  factorial<0>
+{
+	enum
+	{
+		data = 1
+	};
+};
+
+int main ()
+{
+	std::cout << factorial<5>::data;
+} 
+
+
+/* template<typename T, typename U>
 struct ft 
 {
 	enum
@@ -48,8 +79,8 @@ struct ft
 		value = ft<T + U >::value
 	};
 	
-};
-
+}; */
+/* 
 template<typename U = int>
 struct ft <int, U> 
 {
@@ -72,10 +103,7 @@ struct ft<bool, bool >
 
 
 
-int main ()
-{
-	std::cout << ft<>::value;
-} */
+
 
 // bool mypredicate (int i, int j) {
 //   return (i==j);
@@ -84,7 +112,7 @@ int main ()
 // bool comp (char s1, char s2)
 // {
 // 	return std::tolower(s1) < std::tolower(s2);
-// }
+// } */
 
 // int main ()
 // {

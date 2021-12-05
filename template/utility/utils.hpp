@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 18:11:50 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/11/27 01:03:33 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/05 09:19:57 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,7 @@ namespace ft {
 	
 	
 
-	template <typename T>
-		void	swap(T &a, T &b)
-		{
-			T c;
 
-			c = a;
-			a = b;
-			b = c;
-		}
 
 	template <typename T>
 		T min(T a, T b)

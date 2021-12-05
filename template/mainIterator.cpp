@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/12/04 05:38:34 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/05 17:20:54 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,27 @@ int main()
 	{
 		ft::vector<int> lol;
 
-
-
-		lol.insert(lol.begin(), 8, 42 );
-		lol.insert(lol.begin(), 21);
-		lol.insert(lol.begin() + 6, 21);
-		lol.insert(lol.begin() + 6, 8, 12 );
-		lol.insert(lol.end(), 42, 7 );
-
-		lol.insert(lol.begin(), array, array + 5 );
+		lol.insert( lol.begin(), array, array + 5 );
 
 
 
 
-		ft::vector<int>::iterator start = lol.begin();
-		ft::vector<int>::iterator end = lol.end();
+		lol.erase(lol.begin() + 2 );
 
-		for(; start != end ; ++start )
-			std::cout << *start << std::endl;
 
-			std::cout << " " << lol.size() << " " << lol.capacity() << std::endl;
 
-		ft::vector<int> lol2( lol );
+		ft::vector<int>::iterator first = lol.begin();
+		ft::vector<int>::iterator last = lol.end();
 
-		std::cout << "*** " <<(lol2 == lol) << std::endl ;
+		for (; first != last ; ++first )
+			std::cout << *first << " ";
+		std::cout << "\n";
+
+		std::cout << "SIZE: "<< lol.size() << " CAP: " << lol.capacity() << std::endl;
+		
 	}
+
+	
 
 }
 

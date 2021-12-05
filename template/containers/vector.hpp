@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 21:47:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/12/04 05:39:37 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:08:29 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <memory>
 
-// #include <vector>
+ #include <vector>
 #include "../utility/utils.hpp"
 namespace ft
 {
@@ -72,7 +72,16 @@ protected:
 	}
 
 
-	void __exceptionRangeVector( bool __is, char const *str )
+	template < typename __Sw >
+	void	__swap(__Sw &a, __Sw  &b)
+	{
+		__Sw  c;
+		c = a;
+		a = b;
+		b = c;
+	}
+	
+	void __exceptionRangeVector( bool __is, char const *str ) const 
 	{
 		if( __is )
 			throw std::out_of_range( str );
@@ -98,25 +107,18 @@ protected:
 	void __construct_at_end ( _InputIterator __first , _InputIterator __last )
 		{
 			for (; __first != __last ;  ++__first, ++__end_ )
-			{
-				std::cout << "*** \n";
 				__vconstruct( *__first );
-			}
-			std::cout << "------ \n";
 		}
 
 	void __construct_at_end ( size_type __n , const_reference __x )
 	{
 			for (size_type i = 0; i < __n  ;  ++this->__end_ , ++i )
-			{
-				std::cout << "---> \n";
 				__vconstruct( __x );
-			}
 	}
 	
 	pointer __move( pointer __first, pointer __last, pointer __result )
 	{
-		const size_t __n = static_cast< size_t >( __last - __first );
+		const size_t __n = std::distance (__first , __last);
 		if ( __n > 0 )
 			std::memmove(__result, __first, __n * sizeof( __result ) );
 		return __result + __n;
@@ -138,7 +140,7 @@ public:
 	  __size_( 0 ),
 	  __end_cap_( ft::make_pair( ft::nullptr_t, __alloc) )
 	  {
-		//   __end_cap() = __begin_;
+		  __end_cap() = __begin_;
 	  }
 
 	explicit  vector( size_type __n, const value_type & __x = value_type(), const allocator_type& __alloc = allocator_type() )
@@ -162,11 +164,12 @@ public:
 					!ft::is_integral<_InputIterator>::value, _InputIterator
 				>::type * = NULL
 			)
-	: __end_cap_( ft::make_pair( ft::nullptr_t, __alloc ) ),
-	  __size_( 0 )
+	: __size_( 0 ),
+	  __end_cap_( ft::make_pair( ft::nullptr_t, __alloc ) )
+	 
 	{
 		ptrdiff_t __n;
-		__n = ft::distance( __first, __last );
+		__n = std::distance( __first, __last );
 		__vallocate( __n );
 		__construct_at_end( __first, __last );
 	}
@@ -181,16 +184,19 @@ public:
 
 	~vector()
 	{
-		clear();
-		__vdeallocate();
+		 if (__begin_ != ft::nullptr_t)
+    	{
+			clear();
+			__vdeallocate();
+		}
 	}
 	
 	vector& operator=( vector const & __other )
 	{
 		if ( this != &__other )
 		{
-			 __vdeallocate();
-			assign( __other.__begin_ , __other.__end_);
+			__vdeallocate();
+			insert( this->__end_, __other.__begin_ , __other.__end_);
 		}
 		return *this;
 	}
@@ -237,7 +243,7 @@ public:
 	reference	front() { return *( this->__begin_ ); }
 	reference	back()  { return *( this->__end_ - 1); }
 
-	const_reference	back()  const  { return *( this->__begin_ - 1 ); }
+	const_reference	back()  const  { return *( this->__end_ - 1 ); }
 	const_reference	front() const  { return *( this->__begin_ ); }
 
 	T* data() { return pointer( this->__begin_ ); };
@@ -270,19 +276,39 @@ public:
 
 	void assign( size_type __n , const_reference __u )
 	{
-		reserve( __n );
 		clear();
-		push_back( __u );
+		if ( __n == 0 )
+			return ;
+		if ( __n <= capacity() )
+		{
+			__construct_at_end(__n , __u );
+			// this->__size_ = __n;
+		}
+		else
+		{
+			__vdeallocate();
+			__vallocate( __recommend( __n ));
+			for(; __n > 0 ; ++__end_, --__n )
+				__vconstruct( __u );
+		}
 	}
 
 
 	template < typename _InputIterator >
 	void assign( _InputIterator __first, _InputIterator __last, typename ft::enable_if<!ft::is_integral<_InputIterator>::value, _InputIterator>::type * = NULL )
 	{
-		reserve( ft::distance( __first, __last ) );
-		clear();
-		for (; __first != __last; ++__first )
-			push_back( *__first );
+			clear();
+			difference_type __ns = std::distance( __first , __last );
+			const size_t __n = static_cast<size_type>( __ns );
+			if ( __n )
+			{
+				if ( __n > capacity() )
+				{
+					__vdeallocate();
+					__vallocate( __recommend( __n ) );
+				}
+				__construct_at_end( __first, __last );
+			}
 	}
 
 /*
@@ -298,7 +324,7 @@ public:
 
 	size_type size () const
 	{
-		return static_cast< size_type > ( this->__end_ - this->__begin_ ); 
+		return this->__size_ ; 
 	}
 
 	size_type max_size() const
@@ -342,7 +368,7 @@ public:
 			__alloc().destroy( __end_ );
 		}
 		this->__size_ = 0;
-		 __end_ = __begin_;
+		//  __end_ = __begin_;
 	}
 	
 	iterator insert( iterator __positions , const value_type& __x  )
@@ -358,9 +384,9 @@ public:
 			}
 			else
 			{
-				__move( __p, this->__end_, __p + 1 );
+				__move( __p  , this->__end_++ - 1, __p + 1 );
 				*__p = __x;
-				++this->__end_;
+				++this->__size_;
 			}
 		}
 		else
@@ -387,9 +413,10 @@ public:
 					__construct_at_end( __n, __x );
 				else
 				{
-					__move( __p, this->__end_, __p + __n );
+					__move( __p, this->__end_++ - 1, __p + __n );
 					for ( size_type i = 0; i < __n; i++, ++__p )
 						*__p = __x;
+					this->__size_ += __n;
 				}
 				
 			}
@@ -418,7 +445,7 @@ public:
 				)
 	{
 		pointer __p = this->__begin_ + ( __positions - begin() );
-		difference_type __n = ft::distance( __first , __last );
+		difference_type __n = std::distance( __first , __last );
 		if ( __n > 0)
 		{
 			if ( __n <= this->__end_cap() - this->__end_  )
@@ -427,56 +454,52 @@ public:
 					__construct_at_end( __first, __last );
 				else
 				{
-					__move( __p, this->__end_,__p + __n );
+					__move( __p, this->__end_++ - 1 ,__p + __n );
 					for (; __first != __last ; ++__p, ++__first )
 						*__p = *__first;
+					this->__size_ += __n;
 				}
 				
 			}
 			else
 			{
-				 vector __v( this->__alloc() );
-				 __v.reserve( __recommend( size() + __n ) );
-				 __v.__construct_at_end( this->__begin_, __p );
-				 __v.__construct_at_end( __first, __last );
-				 __v.__construct_at_end( __p, this->__end_ );
+				vector __v( this->__alloc() );
+				__v.reserve( __recommend( size() + __n ) );
+				__v.__construct_at_end( this->__begin_, __p );
+				__v.__construct_at_end( __first, __last );
+				__v.__construct_at_end( __p , this->__end_);
 				swap( __v );
+
 			}
 		}
 		return __positions;
 	}
 
-	iterator erase( const_iterator __positions )
+	iterator erase( iterator __positions )
 	{
-		difference_type __ps =  __positions - begin();
+		if ( __positions == end() )
+			pop_back();
 
-		pointer __p = this->__begin_ + __ps;
-
-		__alloc().destroy( __move( __p + 1 , this->__end_, __p ));
+		pointer __p = this->__begin_ + ( __positions  - begin() ) + 1; 
+		
+		for (; __p != this->__end_ ; ++__p )
+			 *(__p - 1) = *(__p);
+		__alloc().destroy( this->__end_ - 1 );
 		this->__end_--;
 		this->__size_--;
-
-		return( iterator(__p) );
+		return __positions;
 	}
 
 	
-	iterator erase ( const_iterator __first, const_iterator __last )
+	iterator erase ( iterator __first, iterator __last )
 	{
-		pointer __p = this->__begin_ + ( __first - begin() );
 		if ( __first != __last )
 		{
-			pointer start = __move( __p + ( __last - __first ), this->__end_, __p );
-
-			for (; start != this->__end_ ; start++)
-			{
-				__alloc().destroy( start );
-				this->__size_--;
-			}
-			this->__end_ -= ( __last - __first );
-
+			for (; __first != __last ; --__last )
+				this->erase( __last - 1);
 		}
-		return( iterator( __p ) );
-	}
+		return( iterator( __first ) );
+	} 
 
 	void push_back( const value_type& __x )
 	{
@@ -507,20 +530,71 @@ public:
 			erase( begin() + (--__cs) );
 	}
 
+
+
+	void resize( size_type __sz, const_reference __x )
+	{
+		size_type __cs = size();
+		if ( __cs < __sz )
+		{
+			 if ( __sz > capacity() )
+				reserve( __sz );
+			for ( size_type __diff = ( __sz - __cs) ; __diff > 0 ; --__diff, ++__end_ )
+				__vconstruct( __x );
+		}
+		for(; __cs > __sz ; )
+			erase( begin() + (--__cs) );
+		
+	}
+
 	void swap( vector& __x )
 	{
-		ft::swap( this->__begin_, __x.__begin_ );
-		ft::swap( this->__end_, __x.__end_ );
-		ft::swap( this->__end_cap_, __x.__end_cap_ );
-		ft::swap( this->__size_ , __x.__size_ );
+		__swap( this->__begin_, __x.__begin_ );
+		__swap( this->__end_, __x.__end_ );
+		__swap( this->__end_cap_, __x.__end_cap_ );
+		__swap( this->__size_ , __x.__size_ );
 	}
 };
-
 
 	template< typename T, class Allocator>
 	bool operator==( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
 	{
-		return __x.size() == __y.size() && ft::equal(__x.begin(), __x.end(), __y.begin() );
+		return __x.size() == __y.size() && ft::equal( __x.begin(), __x.end(), __y.begin() );
+	}
+
+	template< typename T, class Allocator >
+	bool operator!=( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
+	{
+		return !( __x == __y );
+	}
+
+	template <typename T, class Allocator>
+	bool operator<( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
+	{
+		return ft::lexicographical_compare(__x.begin(), __x.end(),__y.begin(), __y.end() );
+	}
+	template <typename T, class Allocator>
+	bool operator>( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
+	{
+		return  __y < __x ;
+	}
+
+	template <typename T, class Allocator>
+	bool operator>=( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
+	{
+		return !(__x < __y);
+	}
+
+	template <typename T, class Allocator>
+	bool operator<=( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
+	{
+		return !(__y < __x);
+	}
+
+	template <typename T, class Allocator>
+	void swap ( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
+	{
+		__x.swap( __y );
 	}
 
 }
