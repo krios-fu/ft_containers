@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 21:47:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/12/05 18:08:29 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/05 20:05:13 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class vector
 public:
 	typedef Allocator													allocator_type;
 	typedef T															value_type;
-	typedef typename allocator_type::reference							reference;
+	typedef typename allocator_type::reference  						reference;
 	typedef typename allocator_type::const_reference					const_reference;
 	typedef typename allocator_type::pointer							pointer;
 	typedef typename allocator_type::const_pointer						const_pointer;
@@ -34,16 +34,19 @@ public:
 	typedef ft::random_access_iterator<const_pointer>					const_iterator;
 	typedef ft::reverse_iterator<iterator>								reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
-	typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;
+	typedef typename ft::iterator_traits<iterator>::difference_type 	difference_type;
 	typedef typename allocator_type::size_type							size_type;
 
 private:
-	pointer								__begin_;
-	pointer								__end_;
-	size_type							__size_;
-	ft::pair< pointer, allocator_type >	__end_cap_;
+	pointer     						__begin_;
+	pointer     						__end_;
+	size_type   						__size_;
+	ft::pair< pointer, allocator_type > __end_cap_;
 
-protected: 
+/*
+** AUX FUNCTIONS
+**
+*/
 	const allocator_type& __alloc() const { return __end_cap_.second; }
 
 	allocator_type& __alloc() { return __end_cap_.second;  }
@@ -71,9 +74,8 @@ protected:
 		}
 	}
 
-
 	template < typename __Sw >
-	void	__swap(__Sw &a, __Sw  &b)
+	void __swap(__Sw &a, __Sw  &b)
 	{
 		__Sw  c;
 		c = a;
@@ -105,15 +107,15 @@ protected:
 
 	template < typename _InputIterator >
 	void __construct_at_end ( _InputIterator __first , _InputIterator __last )
-		{
-			for (; __first != __last ;  ++__first, ++__end_ )
-				__vconstruct( *__first );
-		}
+	{
+		for (; __first != __last ;  ++__first, ++__end_ )
+			__vconstruct( *__first );
+	}
 
 	void __construct_at_end ( size_type __n , const_reference __x )
 	{
-			for (size_type i = 0; i < __n  ;  ++this->__end_ , ++i )
-				__vconstruct( __x );
+		for (size_type i = 0; i < __n ; ++this->__end_ , ++i )
+			__vconstruct( __x );
 	}
 	
 	pointer __move( pointer __first, pointer __last, pointer __result )
@@ -126,24 +128,27 @@ protected:
 
 public:
 
-
-/* CONSTRUCTORS
-**
+/*
+** CONSTRUCTORS
 ** 1 Default constructor Constructs an empty container with a default-constructed allocator.
 ** 2 Constructs the container with count copies of elements with value value.
 ** 3 Constructs the container with the contents of the range [first, last).
-**
+** 4 Copy constructor
+** 5 Destructor Destructs the vector. The destructors of the elements are called and the used storage is deallocated.
+**		Note, that if the elements are pointers, the pointed-to objects are not destroyed.
+** 6 operator= assigns values to the container
+** 7 get_allocator returns the associated allocator
 */
 	explicit vector ( const allocator_type & __alloc = allocator_type() )
 	: __begin_( ft::nullptr_t ),
 	  __end_( __begin_ ),
 	  __size_( 0 ),
 	  __end_cap_( ft::make_pair( ft::nullptr_t, __alloc) )
-	  {
-		  __end_cap() = __begin_;
-	  }
+	{
+			__end_cap() = __begin_;
+	}
 
-	explicit  vector( size_type __n, const value_type & __x = value_type(), const allocator_type& __alloc = allocator_type() )
+	explicit vector( size_type __n, const value_type & __x = value_type(), const allocator_type& __alloc = allocator_type() )
 	: __begin_( ft::nullptr_t ),
 	  __end_( __begin_ ),
 	  __size_( 0 ),
@@ -155,7 +160,7 @@ public:
 	}
 
 	template< class  _InputIterator >
-	vector (
+	vector  (
 				_InputIterator __first,
 				_InputIterator __last,
 				const Allocator& __alloc = Allocator(),
@@ -164,16 +169,15 @@ public:
 					!ft::is_integral<_InputIterator>::value, _InputIterator
 				>::type * = NULL
 			)
-	: __size_( 0 ),
-	  __end_cap_( ft::make_pair( ft::nullptr_t, __alloc ) )
-	 
+	:__size_( 0 ),
+	 __end_cap_( ft::make_pair( ft::nullptr_t, __alloc ) )
 	{
 		ptrdiff_t __n;
 		__n = std::distance( __first, __last );
 		__vallocate( __n );
 		__construct_at_end( __first, __last );
 	}
-	
+
 	vector ( vector const & __other )
 	: __begin_( ft::nullptr_t ),
 	  __end_( __begin_ ),
@@ -184,13 +188,13 @@ public:
 
 	~vector()
 	{
-		 if (__begin_ != ft::nullptr_t)
-    	{
+		if (__begin_ != ft::nullptr_t )
+		{
 			clear();
 			__vdeallocate();
 		}
 	}
-	
+
 	vector& operator=( vector const & __other )
 	{
 		if ( this != &__other )
@@ -206,20 +210,21 @@ public:
 		return this->__alloc();
 	}
 
-
-
 /* 
 ** ELEMENTS ACCESS
-**
+** at access specified element with bounds checking
+** operator[] access specified element
+** front access the first element
+** back access the last element
+** data direct access to the underlying array
 */
-
 
 	reference at( size_t __n )
 	{
 		__exceptionRangeVector( __n >= this->__size_, "Vector index out of range" );
 		return this->__begin_[ __n ];
 	}
-	
+
 	const_reference at( size_t __n ) const
 	{
 		__exceptionRangeVector( __n >= this->__size_, "Vector index out of range" );
@@ -230,14 +235,12 @@ public:
 	{
 		__exceptionRangeVector( __n >= this->__size_ , "vector[] index out of bounds" );
 		return this->__begin_[ __n ];
-		
 	}
 
 	const_reference operator[] ( size_t __n ) const 
 	{
 		__exceptionRangeVector( __n >= this->__size_, "vector[] index out of bounds" );
 		return this->__begin_[ __n ];
-		
 	}
 
 	reference	front() { return *( this->__begin_ ); }
@@ -249,10 +252,9 @@ public:
 	T* data() { return pointer( this->__begin_ ); };
 	const T* data() const { return pointer( this->__begin_ ); };
 
-
 /*
 ** ITERATORS
-**
+** return an specific iterator
 */
 
 	iterator begin() { return  this->__begin_ ; }
@@ -270,8 +272,9 @@ public:
 /*
 ** ASSIGN
 ** Replaces the contents of the container.
-** 1  Replaces the contents with count copies of value value
-** 2 Replaces the contents with copies of those in the range [first, last). The behavior is undefined if either argument is an iterator into *this.
+** 1 Replaces the contents with count copies of value value
+** 2 Replaces the contents with copies of those in the range [first, last).
+**   The behavior is undefined if either argument is an iterator into *this.
 */
 
 	void assign( size_type __n , const_reference __u )
@@ -280,10 +283,7 @@ public:
 		if ( __n == 0 )
 			return ;
 		if ( __n <= capacity() )
-		{
-			__construct_at_end(__n , __u );
-			// this->__size_ = __n;
-		}
+			__construct_at_end( __n , __u );
 		else
 		{
 			__vdeallocate();
@@ -293,9 +293,15 @@ public:
 		}
 	}
 
-
 	template < typename _InputIterator >
-	void assign( _InputIterator __first, _InputIterator __last, typename ft::enable_if<!ft::is_integral<_InputIterator>::value, _InputIterator>::type * = NULL )
+	void assign(
+					_InputIterator __first,
+					_InputIterator __last,
+					typename ft::enable_if
+					<
+						!ft::is_integral<_InputIterator>::value, _InputIterator
+					>::type * = NULL
+				)
 	{
 			clear();
 			difference_type __ns = std::distance( __first , __last );
@@ -319,12 +325,16 @@ public:
 ** max_size: returns the maximum possible number of elements
 ** reserve: reserves storage N
 ** capacity: returns the number of elements that can be held in currently allocated storage
-**
 */
+
+	bool empty() const
+	{
+		return this->__size_ == 0;
+	}
 
 	size_type size () const
 	{
-		return this->__size_ ; 
+		return this->__size_;
 	}
 
 	size_type max_size() const
@@ -337,11 +347,6 @@ public:
 		return static_cast< size_type > ( __end_cap() - this->__begin_ );
 	}
 
-	bool empty() const
-	{
-		return this->__size_ == 0;
-	}
-
 	void reserve ( size_type __n )
 	{
 		if ( __n > this->capacity() )
@@ -352,10 +357,20 @@ public:
 			swap( __v );
 		}
 	}
+
 /*
 ** MODIFIERS
 ** clear: Erases all elements from the container. After this call, size() returns zero
+** insert : 
+**  1 inserts value before pos
+**  3 inserts count copies of the value before pos
+**  4 inserts elements from range [first, last) before pos
+** erase Erases the specified elements from the container.
+**  1 Removes the element at pos.
+**  2 Removes the elements in the range [first, last).
 ** push_back : Appends the given element value to the end of the container.
+** pop_back Removes the last element of the container.
+** resize changes the number of elements stored
 ** swap Exchanges the contents of the container with those of other. Does not invoke any move, copy, or swap operations on individual elements.
 **	All iterators and references remain valid. The past-the-end iterator is invalidated.
 */
@@ -368,7 +383,6 @@ public:
 			__alloc().destroy( __end_ );
 		}
 		this->__size_ = 0;
-		//  __end_ = __begin_;
 	}
 	
 	iterator insert( iterator __positions , const value_type& __x  )
@@ -384,7 +398,7 @@ public:
 			}
 			else
 			{
-				__move( __p  , this->__end_++ - 1, __p + 1 );
+				__move( __p, this->__end_++ - 1, __p + 1 );
 				*__p = __x;
 				++this->__size_;
 			}
@@ -418,7 +432,6 @@ public:
 						*__p = __x;
 					this->__size_ += __n;
 				}
-				
 			}
 			else
 			{
@@ -435,18 +448,18 @@ public:
 
 	template< class _InputIterator >
 	iterator insert(
-				iterator __positions,
-				_InputIterator __first,
-				_InputIterator __last,
-				typename ft::enable_if
-				<
-					!ft::is_integral<_InputIterator>::value, _InputIterator
-				>::type * = NULL
-				)
+						iterator __positions,
+						_InputIterator __first,
+						_InputIterator __last,
+						typename ft::enable_if
+						<
+							!ft::is_integral<_InputIterator>::value, _InputIterator
+						>::type * = NULL
+					)
 	{
 		pointer __p = this->__begin_ + ( __positions - begin() );
 		difference_type __n = std::distance( __first , __last );
-		if ( __n > 0)
+		if ( __n > 0 )
 		{
 			if ( __n <= this->__end_cap() - this->__end_  )
 			{
@@ -459,7 +472,6 @@ public:
 						*__p = *__first;
 					this->__size_ += __n;
 				}
-				
 			}
 			else
 			{
@@ -469,7 +481,6 @@ public:
 				__v.__construct_at_end( __first, __last );
 				__v.__construct_at_end( __p , this->__end_);
 				swap( __v );
-
 			}
 		}
 		return __positions;
@@ -479,9 +490,7 @@ public:
 	{
 		if ( __positions == end() )
 			pop_back();
-
 		pointer __p = this->__begin_ + ( __positions  - begin() ) + 1; 
-		
 		for (; __p != this->__end_ ; ++__p )
 			 *(__p - 1) = *(__p);
 		__alloc().destroy( this->__end_ - 1 );
@@ -490,7 +499,6 @@ public:
 		return __positions;
 	}
 
-	
 	iterator erase ( iterator __first, iterator __last )
 	{
 		if ( __first != __last )
@@ -499,7 +507,7 @@ public:
 				this->erase( __last - 1);
 		}
 		return( iterator( __first ) );
-	} 
+	}
 
 	void push_back( const value_type& __x )
 	{
@@ -521,7 +529,7 @@ public:
 		size_type __cs = size();
 		if ( __cs < __sz )
 		{
-			 if ( __sz > capacity() )
+			if ( __sz > capacity() )
 				reserve( __sz );
 			for ( size_type __diff = ( __sz - __cs) ; __diff > 0 ; --__diff, ++__end_ )
 				__vconstruct( T() );
@@ -529,8 +537,6 @@ public:
 		for(; __cs > __sz ; )
 			erase( begin() + (--__cs) );
 	}
-
-
 
 	void resize( size_type __sz, const_reference __x )
 	{
@@ -556,6 +562,10 @@ public:
 	}
 };
 
+/*
+** Non-member functions
+**
+*/
 	template< typename T, class Allocator>
 	bool operator==( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
 	{
@@ -571,12 +581,12 @@ public:
 	template <typename T, class Allocator>
 	bool operator<( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
 	{
-		return ft::lexicographical_compare(__x.begin(), __x.end(),__y.begin(), __y.end() );
+		return ft::lexicographical_compare( __x.begin(), __x.end(), __y.begin(), __y.end() );
 	}
 	template <typename T, class Allocator>
 	bool operator>( const ft::vector<T, Allocator> & __x,  const ft::vector<T, Allocator> & __y )
 	{
-		return  __y < __x ;
+		return  __y < __x;
 	}
 
 	template <typename T, class Allocator>
@@ -596,7 +606,6 @@ public:
 	{
 		__x.swap( __y );
 	}
-
 }
 
 #endif
