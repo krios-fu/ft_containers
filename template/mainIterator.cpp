@@ -6,13 +6,14 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/12/05 20:18:08 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/14 12:50:03 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./containers/vector.hpp"
 
 #include <iostream>
+#include <vector>
 #include <string>
 /* #include <deque>
 #if 1 //CREATE A REAL STL EXAMPLE
@@ -26,7 +27,7 @@
 	#include <vector.hpp>
 #endif */
 
-#include <stdlib.h>
+/* #include <stdlib.h>
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
@@ -38,7 +39,7 @@ struct Buffer
 
 
 #define COUNT (MAX_RAM / (int)sizeof(Buffer))
-
+ */
 /* template<typename T>
 class MutantStack : public ft::stack<T>
 {
@@ -58,8 +59,37 @@ public:
 	iterator end() { return this->c.end(); }
 };
  */
-int main(int argc, char** argv) {
-	if (argc != 2)
+int main() {
+
+
+
+
+	int array [] = { 1, 2, 3, 4, 5};
+	std::vector<int> k;
+
+	k.assign(array, array + 5 );
+
+	std::vector<int>::iterator start = k.begin();
+	std::vector<int>::iterator end = k.end();
+
+	ft::vector<int> l ;
+
+	l.assign(start,  end);
+
+	ft::vector<int>::iterator start2 = l.begin();
+	ft::vector<int>::iterator end2 = l.end();
+
+	for (; start2 != end2 ; ++start2)
+	{
+		std::cout << *start2 << std::endl;
+	}
+	
+
+	// if (typeid(ft::iterator_traits<ft::vector<int>::iterator>::iterator_category)==typeid(ft::random_access_iterator_tag))
+        // std::cout << "int* is a random-access iterator";
+
+
+/* 	if (argc != 2)
 	{
 		std::cerr << "Usage: ./test seed" << std::endl;
 		std::cerr << "Provide a seed please" << std::endl;
@@ -101,7 +131,7 @@ int main(int argc, char** argv) {
 	{
 		//NORMAL ! :P
 		std::cout << e.what() << std::endl;
-	}
+	} */
 	
 /* 	for (int i = 0; i < COUNT; ++i)
 	{

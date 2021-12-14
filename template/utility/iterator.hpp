@@ -90,7 +90,7 @@ namespace ft
 		};
 
 		/*  END ITERATOR_TRAITS */
-
+/* 
 	template <class Category, class T, class Distance = ptrdiff_t,
 				class Pointer = T*, class Reference = T&>
 		struct iterator
@@ -100,7 +100,7 @@ namespace ft
 			typedef Pointer							pointer;
 			typedef Reference						refrences;
 			typedef Category						iterator_category;
-		};
+		}; */
 
 /* 	template <class _InputIter>
 		typename ft::iterator_traits< _InputIter >::difference_type
@@ -113,9 +113,9 @@ namespace ft
 
 	/* START REVERSE_ITERATOR */
 
-	template < class _Iter >
-		class reverse_iterator
-		{
+template < class _Iter >
+class reverse_iterator
+	{
 
 			protected:
 				_Iter  current;
@@ -357,6 +357,27 @@ namespace ft
 			__x += __N;
 			return __x;
 		}
+
+
+
+/* Iterator map */
+/* 
+	template < class _TreeIterator >
+	class map_iterator
+	{
+		private:
+		typedef typename _TreeIterator::_NodeType					_NodeType;
+		typedef typename _TreeIterator::__pointer_traits			__pointer_traits;
+
+		_TreeIterator __i;
+		public: 
+
+		typedef std::bidirectional_iterator_Tag						iterator_category;
+		typedef typename 
+
+
+
+	}; */
 
 }
 #endif

@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 21:47:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/12/05 20:05:13 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/13 10:37:34 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include <memory>
 
- #include <vector>
 #include "../utility/utils.hpp"
 namespace ft
 {
@@ -75,7 +74,7 @@ private:
 	}
 
 	template < typename __Sw >
-	void __swap(__Sw &a, __Sw  &b)
+	void __swap( __Sw &a, __Sw  &b)
 	{
 		__Sw  c;
 		c = a;
@@ -188,7 +187,7 @@ public:
 
 	~vector()
 	{
-		if (__begin_ != ft::nullptr_t )
+		if ( __begin_ != ft::nullptr_t )
 		{
 			clear();
 			__vdeallocate();
@@ -257,11 +256,11 @@ public:
 ** return an specific iterator
 */
 
-	iterator begin() { return  this->__begin_ ; }
-	iterator end()   { return  this->__end_ ; }
+	iterator begin() { return this->__begin_ ; }
+	iterator end()   { return this->__end_ ; }
 
-	const_iterator end()   const  { return  this->__end_ ; }
-	const_iterator begin() const  { return  this->__begin_ ; }
+	const_iterator end()   const  { return this->__end_ ; }
+	const_iterator begin() const  { return this->__begin_ ; }
 
 	reverse_iterator rbegin() { return reverse_iterator( this->__end_ ); }
 	reverse_iterator rend()   { return reverse_iterator( this->__begin_ ); }
@@ -287,7 +286,7 @@ public:
 		else
 		{
 			__vdeallocate();
-			__vallocate( __recommend( __n ));
+			__vallocate( __recommend( __n ) );
 			for(; __n > 0 ; ++__end_, --__n )
 				__vconstruct( __u );
 		}
@@ -504,7 +503,7 @@ public:
 		if ( __first != __last )
 		{
 			for (; __first != __last ; --__last )
-				this->erase( __last - 1);
+				this->erase( __last - 1 );
 		}
 		return( iterator( __first ) );
 	}
@@ -526,7 +525,8 @@ public:
 
 	void resize( size_type __sz )
 	{
-		size_type __cs = size();
+		resize( __sz, T() );
+/* 		size_type __cs = size();
 		if ( __cs < __sz )
 		{
 			if ( __sz > capacity() )
@@ -535,7 +535,7 @@ public:
 				__vconstruct( T() );
 		}
 		for(; __cs > __sz ; )
-			erase( begin() + (--__cs) );
+			erase( begin() + (--__cs) ); */
 	}
 
 	void resize( size_type __sz, const_reference __x )
