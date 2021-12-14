@@ -6,11 +6,12 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:10:43 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/12/14 12:50:03 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/14 21:55:26 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./containers/vector.hpp"
+#include "./containers/map.hpp"
 
 #include <iostream>
 #include <vector>
@@ -61,9 +62,18 @@ public:
  */
 int main() {
 
+/* 
+	std::map<int, int> j { { 12, 42 } , {21, 42 } };
 
+	j[12] = 42; */
+	// ft::map< int , int> k(12, 42);
 
+	// std::cout << k.getNode().second << std::endl;
 
+	// k[12] = 42;
+	
+
+/* 
 	int array [] = { 1, 2, 3, 4, 5};
 	std::vector<int> k;
 
@@ -82,7 +92,7 @@ int main() {
 	for (; start2 != end2 ; ++start2)
 	{
 		std::cout << *start2 << std::endl;
-	}
+	} */
 	
 
 	// if (typeid(ft::iterator_traits<ft::vector<int>::iterator>::iterator_category)==typeid(ft::random_access_iterator_tag))

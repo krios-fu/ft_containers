@@ -20,23 +20,41 @@ class map
 	typedef value_type &												reference;
 	typedef const value_type & 											const_reference;
 
+	private:
 
-
-/* 	class value_compare	: std::binary_function< value_Type, value_type, bool >
+	struct Node
 	{
-		friend class map;
-		protected:
-			key_compare comp;
-		
-		value_compare( key_compare c ) : comp ( c ) {}
-		public:
+		value_type			__content;
+		Node*				__parent;
+		Node*				__rigth;
+		Node*				__left;
 
-		bool operator()( const value_type & __x ,  const value_type & __y ) const 
+		Node ( const_reference val = value_type() )
+			: __content(val),
+			  __parent( ft::nullptr_t ),
+			  __rigth( ft::nullptr_t ),
+			  __left ( ft::nullptr_t ) {}
+
+		Node ( const Node & __other )
+			: __content( __other.content ),
+			  __parent( ft::nullptr_t ),
+			  __rigth( ft::nullptr_t ),
+			  __left ( ft::nullptr_t ) {}
+	};
+
+	/* Node				*__nodePtr;
+	public:
+
+		value_type getNode()
 		{
-			return comp( __x.first , __y.first );
+			return __nodePtr->__content;
 		}
-	}; */
 
+	map()
+	{
+
+	}
+ */
 };
 
 }

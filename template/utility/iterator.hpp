@@ -160,7 +160,7 @@ class reverse_iterator
 				reverse_iterator	operator- ( difference_type __N ) const { return reverse_iterator( current + __N );}
 				reverse_iterator&	operator-=( difference_type __N )		{ current += __N; return *this ;}
 				reference			operator[]( difference_type __N ) const { return *(*this + __N) ;}
-		};
+	};
 
 
 		template< class _Iter1>
@@ -254,7 +254,7 @@ class reverse_iterator
 		ft::reverse_iterator<_Iter>
 			operator+( typename ft::reverse_iterator<_Iter>::difference_type __N , const ft::reverse_iterator<_Iter>& __x )
 			{
-				return  ft::reverse_iterator<_Iter> ( __x.base() - __N ) ;
+				return  ft::reverse_iterator<_Iter> ( __x.base() - __N );
 			}
 
 		/* Ramdom_assccess_iterator start */

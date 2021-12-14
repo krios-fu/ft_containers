@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 21:47:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/12/13 10:37:34 by krios-fu         ###   ########.fr       */
+/*   Updated: 2021/12/14 21:51:09 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,7 +378,7 @@ public:
 		size_type __old_size = size();
 		for ( size_type i = 0; i < __old_size ; ++i )
 		{
-			 --__end_;
+			--__end_;
 			__alloc().destroy( __end_ );
 		}
 		this->__size_ = 0;
