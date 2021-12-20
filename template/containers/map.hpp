@@ -1,5 +1,5 @@
-#ifndef MAP_HPP
-# define MAP_HPP
+#ifndef _MAP_HPP
+# define _MAP_HPP
 
 #include <map>
 #include <memory>
@@ -22,39 +22,15 @@ class map
 
 	private:
 
-	struct Node
-	{
-		value_type			__content;
-		Node*				__parent;
-		Node*				__rigth;
-		Node*				__left;
 
-		Node ( const_reference val = value_type() )
-			: __content(val),
-			  __parent( ft::nullptr_t ),
-			  __rigth( ft::nullptr_t ),
-			  __left ( ft::nullptr_t ) {}
-
-		Node ( const Node & __other )
-			: __content( __other.content ),
-			  __parent( ft::nullptr_t ),
-			  __rigth( ft::nullptr_t ),
-			  __left ( ft::nullptr_t ) {}
-	};
-
-	/* Node				*__nodePtr;
 	public:
 
-		value_type getNode()
-		{
-			return __nodePtr->__content;
-		}
+	map();
 
-	map()
+	explicit map( const key_compare & __comp, const allocator_type & __a  = allocator_type() )
 	{
 
 	}
- */
 };
 
 }
