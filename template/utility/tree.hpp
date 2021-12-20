@@ -7,6 +7,19 @@
 
 namespace ft 
 {
+	template<class T>
+		struct Node
+		{
+			T					__content;
+			Node*				__parent;
+			Node*				__rigth;
+			Node*				__left;
+
+		Node( const_reference __val = T() ):
+			__content(__val), parent(nullptr), left(nullptr), right(nullptr) {}
+		Node(Node const &other):
+			__content(other.__content), parent(nullptr), left(nullptr), right(nullptr) {}
+		};
 
 	template < class _Tp, class _Compare, class _Allocator>
 	class tree
@@ -16,7 +29,8 @@ namespace ft
 		typedef _Tp												value_type;
 		typedef _Compare										value_compare;
 		typedef _Allocator										allocator_type;
-
+		typedef ft::Node<T>										node_type;
+		typedef typename _Allocator::template rebind<node_type>::other		node_allocator;
 		// typedef typename allocator_type::reference				reference;
 		// typedef typename allocator_type::const_reference		const_eference;
 		// typedef typename allocator_type::pointer				pointer;
@@ -24,21 +38,10 @@ namespace ft
 		typedef typename allocator_type::size_type				size_type;
 		typedef typename allocator_type::difference_type		differences_type;
 
-		typedef struct Node
-		{
-			value_type			__content;
-			Node*				__parent;
-			Node*				__rigth;
-			Node*				__left;
 
-		Node(const_reference __val=value_type()):
-			__content(__val), parent(nullptr), left(nullptr), right(nullptr) {}
-		Node(Node const &other):
-			__content(other.__content), parent(nullptr), left(nullptr), right(nullptr) {}
-		};
 	private:
 
-		typedef Node*								n_pointer;
+		// typedef Node*								n_pointer;
 		n_pointer									__begin_node_;
 		n_pointer									__end_node_;
 		ft::pair< pointer, allocator_type > 		__end_cap_;
