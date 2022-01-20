@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/19 20:37:17 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:35:12 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,25 @@ namespace ft
 
 	private:
 
-		pointer 										root;
-		node_allocator									n_allocator;
-		// typedef Node*								n_pointer;
-		// n_pointer									__begin_node_;
-		// n_pointer									__end_node_;
+		pointer										root;
+		pointer										nill;
+		node_allocator								n_allocator;
+		size_type									size;
+		
 		ft::pair< pointer, node_allocator >		__end_cap_;
+
+
+
+		const node_allocator& __node_alloc() const { return __end_cap_.second; }
+		node_allocator& __node_alloc() { return __end_cap_.second;  }
+
+		pointer & __end_node() { return __end_cap.first; }
+		const_pointer & __end_node() const { return __end_cap.first; }
 
 		public:
 
-
-		const node_allocator& __alloc() const { return __end_cap_.second; }
-		node_allocator& __alloc() { return __end_cap_.second;  }
-
-		pointer & __end_cap() { return __end_cap.first; }
-		const_pointer & __end_cap() const { return __end_cap.first; }
-
+		explicit tree ( const )
 
 	};
-
-	
 }
 #endif 
