@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 21:47:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/19 19:35:22 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/24 19:49:29 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ private:
 		__end_ = __begin_;
 	}
 
+	void __vconstruct(const value_type& __x )
+	{
+		__alloc().construct( this->__end_, __x );
+		this->__size_++;
+	}
+
 	void __vdeallocate()
 	{
 		if ( __begin_ != ft::nullptr_t )
@@ -87,11 +93,7 @@ private:
 		if( __is )
 			throw std::out_of_range( str );
 	}
-	void __vconstruct(const value_type& __x )
-	{
-		__alloc().construct( this->__end_, __x );
-		this->__size_++;
-	}
+
 
 	size_type __recommend( size_type __new_size ) const 
 	{

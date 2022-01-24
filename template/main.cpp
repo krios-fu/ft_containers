@@ -6,14 +6,14 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/19 19:51:46 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/24 20:10:25 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "./utility/utils.hpp"
 #include "./containers/map.hpp"
-#include "tree.hpp"
+#include "./utility/tree.hpp"
 // #include <utility>
 // #include <algorithm>
 //  #include <vector>
@@ -23,8 +23,14 @@
 
 int main ()
 {
-	// if (typeid(ft::iterator_traits<ft::vector<int>::iterator>::iterator_category)==typeid(ft::random_access_iterator_tag))
-    //     std::cout << "int* is a random-access iterator";
+
+	ft::pair<int, int> lol(12,12);
+	
+	// ft::Node<ft::pair<int, int> > n_lol(lol);
+	
+	ft::tree< ft::pair<int, int> , std::less<ft::pair<int, int> > > tree_lol ( lol );
+
+	std::cout << "--> " << tree_lol.print() << std::endl;
 }
 
 
