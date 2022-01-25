@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/24 20:10:25 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/25 19:30:37 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@
 int main ()
 {
 
-	ft::pair<int, int> lol(12,12);
+	 ft::pair<int, int> lol(12,12);
 	
 	// ft::Node<ft::pair<int, int> > n_lol(lol);
 	
-	ft::tree< ft::pair<int, int> , std::less<ft::pair<int, int> > > tree_lol ( lol );
+	ft::tree< ft::pair<int, int> , std::less<ft::pair<int, int> > > tree_lol;
 
-	std::cout << "--> " << tree_lol.print() << std::endl;
-}
+	std::cout << tree_lol.insert( lol ).first << std::endl;
+	
+} 
 
 
 
@@ -99,8 +100,8 @@ int main ( )
 }
  */
 
-/* 
-template <unsigned  int  N>
+
+/* template <unsigned  int  N>
 struct  factorial
 {
 	enum
@@ -116,12 +117,39 @@ struct  factorial<0>
 	{
 		data = 1
 	};
-};
+}; */
+
+ /* template <typename T>
+typename ft::enable_if
+						<
+							ft::is_integral<T>::value, int
+						>::type
+
+printNum ( T n )
+{
+	
+	return n;
+}
+
+ template <typename T>
+typename ft::enable_if
+						<
+							!ft::is_integral<T>::value, std::string
+						>::type
+
+printNum ( T n )
+{
+	
+	return n;
+}
+
 
 int main ()
 {
-	std::cout << factorial<5>::data;
-}  */
+	std::cout << printNum<std::string>("hola") << std::endl;
+	std::cout << printNum<int>(42) << std::endl;
+
+}   */
 
 
 /* template<typename T, typename U>
