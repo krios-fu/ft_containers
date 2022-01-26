@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/25 19:30:37 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/26 23:34:53 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,45 @@ int main ()
 {
 
 	 ft::pair<int, int> lol(12,12);
+	 ft::pair<int, int> lol2(42,42);
+	 ft::pair<int, int> lol3(0,1);
+	 ft::pair<int, int> lol4(1992,1);
+
+	 
+
 	
 	// ft::Node<ft::pair<int, int> > n_lol(lol);
 	
 	ft::tree< ft::pair<int, int> , std::less<ft::pair<int, int> > > tree_lol;
 
-	std::cout << tree_lol.insert( lol ).first << std::endl;
+	std::cout << tree_lol.insert( lol ).first->content.first << std::endl;
+
+	ft::pair<ft::Node<ft::pair<int, int> > *, bool> aux;
+
+	ft::pair<ft::Node<ft::pair<int, int> > *, bool> *aux2;
+
+
+	aux = tree_lol.insert( lol2 );
+
+	
+	std::cout << aux.first->content.first << " bool: " << aux.second << std::endl;
+
+	aux = tree_lol.insert( lol2 );
+	std::cout << aux.first->content.first << " bool: " << aux.second << std::endl;
+
+	aux = tree_lol.insert( lol3);
+	std::cout << aux.first->content.first << " bool: " << aux.second << std::endl;
+
+
+	aux = tree_lol.insert( lol4);
+	std::cout << aux.first->content.first << " bool: " << aux.second << std::endl;
+	aux2 = &aux;
+
+
+	// std::cout << " ---> " << (tree_lol.__next(aux2->first))->content.first << std::endl;
+
+	
+	
 	
 } 
 

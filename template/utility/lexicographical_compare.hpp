@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 21:10:06 by krios-fu          #+#    #+#             */
-/*   Updated: 2021/10/12 21:10:48 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:35:52 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ namespace ft
 		}
 		/*  END ft::lexicographical_compare  */
 }
+
 
 #endif
