@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/26 23:34:53 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/26 23:37:24 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int main ()
 	aux2 = &aux;
 
 
-	// std::cout << " ---> " << (tree_lol.__next(aux2->first))->content.first << std::endl;
+	std::cout << " ---> " << (tree_lol.__next(aux2->first))->content.first << std::endl;
 
 	
 	

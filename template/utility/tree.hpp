@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/26 23:35:25 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/26 23:37:45 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ namespace ft
 			return tmpNode;
 		}
 
+		public:
+
 		template< typename _NodePtr >
 		_NodePtr __next ( _NodePtr __x )
 		{
@@ -141,8 +143,6 @@ namespace ft
 				__x = __x->parent;
 			return __x->parent;
 		}
-		public:
-
 
 		explicit tree ( const allocator_type & __node_alloc_ = allocator_type() )
 		: __compare_( value_compare() ),
@@ -175,7 +175,7 @@ namespace ft
 						__checkLeaf.first = __checkLeaf.first->rigth;
 						
 					}
-					else if ( __compare_( __checkLeaf.first->content, __x ) )
+					else if ( __compare_( __x, __checkLeaf.first->content ) )
 					{
 						__checkLeaf.first->left= __vconstructNode( __x, __checkLeaf.first );
 						__checkLeaf.first = __checkLeaf.first->left;
