@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/27 20:57:01 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/28 00:01:02 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ namespace ft
 		template < typename  _NodePtr >
 		_NodePtr __child_max ( _NodePtr __x)
 		{
-			while ( __x->rigth != __end_node() )
-				__x = __x->rigth;
+			while ( __x->right != __end_node() )
+				__x = __x->right;
 			return __x;
 		}
 
@@ -92,9 +92,9 @@ namespace ft
 			{
 				if ( __compare_( __x->content, __value ) )
 				{
-					if ( __x->rigth == __end_node() )
+					if ( __x->right == __end_node() )
 						break; 
-					__x = __x->rigth;
+					__x = __x->right;
 				}
 				else if ( __compare_( __value, __x->content ) )
 				{
@@ -113,9 +113,11 @@ namespace ft
 			pointer tmpNode = __node_alloc().allocate( 1 );
 			__node_alloc().construct( tmpNode, __x );
 			tmpNode->parent = __end_node();
-			tmpNode->rigth = __end_node();
+			tmpNode->right = __end_node();
 			tmpNode->left = __end_node();
 			tmpNode->black = false;
+			__size_++;
+
 			return tmpNode;
 		}
 
@@ -124,12 +126,31 @@ namespace ft
 			pointer tmpNode = __node_alloc().allocate( 1 );
 			__node_alloc().construct( tmpNode, __x );
 			tmpNode->parent = __parent;
-			tmpNode->rigth = __end_node();
+			tmpNode->right = __end_node();
 			tmpNode->left = __end_node();
 			tmpNode->black = false;
-	
-
+			__size_++;
 			return tmpNode;
+		}
+		
+		template< typename _NodePtr >
+		_NodePtr __next ( _NodePtr __x )
+		{
+			if ( __x->right != __end_node() )
+				return __child_min( __x->right );
+			while ( !__is_left_child( __x ) )
+				__x = __x->parent;
+			return __x->parent;
+		}
+
+		template< typename _NodePtr >
+		_NodePtr __back ( _NodePtr __x )
+		{
+			if ( __x->left != __end_node() )
+				return __child_max( __x->left );
+			while ( __is_left_child( __x ) )
+				__x = __x->parent;
+			return __x->parent;
 		}
 
 		public:
@@ -138,35 +159,42 @@ namespace ft
 				if (node == NULL)
 					node = __root_;
 				if (node != __end_node()) {
-					// std::cout << BKCOL << prefix << NOCOL;
-					// std::cout << BKCOL << (isLeft ? "├──" : "└──" ) << NOCOL;
+					 std::cout << BLACK << prefix << WHITE ;
+					 std::cout << BLACK << (isLeft ? "├──" : "└──" ) << WHITE;
 					if (!node->black)
-						std::cout << node->content.first << std::endl;
+						std::cout << RED ""<< node->content.first << WHITE <<std::endl;
 					else {
-						if (node->content.first == -1)
+						if (node == __end_node() )
 							std::cout << "nil"  << std::endl;
 						else
-							std::cout << node->content.first  << std::endl;
+							std::cout << node->content.first  << WHITE << std::endl;
 					}
 					print(prefix + (isLeft ? "│   " : "    "), node->right, true);
 					print(prefix + (isLeft ? "│   " : "    "), node->left, false);
 				}
 			}
 
-		template< typename _NodePtr >
-		_NodePtr __next ( _NodePtr __x )
-		{
-			if ( __x->rigth != __end_node() )
-				return __child_min( __x->rigth );
-			while ( !__is_left_child( __x ) )
-			{
-				std::cout << "****** "<< __x->content.first  << " " << __x->rigth->content.first << std::endl;
-				__x = __x->parent;
-				std::cout << "****** "<< __x->content.first  << " " << __x->rigth->content.first << std::endl;
 
+		template< typename _NodePtr >
+			void __rightRotate ( _NodePtr __x )
+			{
+				// std::cout << " RR " << __x->content.first << std::endl;
+				_NodePtr __y = __x->left;
+				__x->left = __y->right;
+				
+				// std::cout << __x->content.first << std::endl;
+				if ( __x->left != __end_node() )
+					__y->left->parent = __x;
+				__y->parent = __x->parent;
+				// if ( __x->parent == __end_node() )
+				// 	__root_ = __x;
+				if ( __is_left_child( __x ) )
+					__x->parent->left = __y;
+				else 
+					__x->parent->right= __y;
+				__y->right = __x;
+				__x->parent = __y;
 			}
-			return __x->parent;
-		}
 
 		explicit tree ( const allocator_type & __node_alloc_ = allocator_type() )
 		: __compare_( value_compare() ),
@@ -184,6 +212,8 @@ namespace ft
 			if ( __root_ == __end_node() )
 			{
 				__root_ = __vconstructNode( __x );
+				__end_node()->left = __root_;
+				__end_node()->right = __root_;
 				__root_->black = true;
 				return make_pair<pointer, bool>( __root_, true );
 			}
@@ -195,17 +225,16 @@ namespace ft
 				{
 					if ( __compare_( __checkLeaf.first->content, __x ) )
 					{
-						__checkLeaf.first->rigth = __vconstructNode( __x, __checkLeaf.first );
-						__checkLeaf.first = __checkLeaf.first->rigth;
+						__checkLeaf.first->right = __vconstructNode( __x, __checkLeaf.first);
+						__checkLeaf.first = __checkLeaf.first->right;
 						
 					}
-					else if ( __compare_( __x, __checkLeaf.first->content ) )
+					else if ( __compare_( __x,__checkLeaf.first->content ) )
 					{
-						__checkLeaf.first->left= __vconstructNode( __x, __checkLeaf.first );
+						__checkLeaf.first->left= __vconstructNode( __x, __checkLeaf.first);
 						__checkLeaf.first = __checkLeaf.first->left;
 						
 					}
-					__size_++;
 				}
 				return __checkLeaf;
 			}
