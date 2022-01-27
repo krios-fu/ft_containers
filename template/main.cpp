@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/26 23:37:24 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/27 17:09:00 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ int main ()
 
 	 ft::pair<int, int> lol(12,12);
 	 ft::pair<int, int> lol2(42,42);
-	 ft::pair<int, int> lol3(0,1);
+	 ft::pair<int, int> lol3(21,1);
 	 ft::pair<int, int> lol4(1992,1);
+	 ft::pair<int, int> lol5(1993,1);
+
 
 	 
 
@@ -58,6 +60,7 @@ int main ()
 	aux = tree_lol.insert( lol4);
 	std::cout << aux.first->content.first << " bool: " << aux.second << std::endl;
 	aux2 = &aux;
+	aux = tree_lol.insert( lol5);
 
 
 	std::cout << " ---> " << (tree_lol.__next(aux2->first))->content.first << std::endl;

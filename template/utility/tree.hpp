@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/26 23:37:45 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/27 17:07:49 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,10 @@ namespace ft
 			if ( __x->rigth != __end_node() )
 				return __child_min( __x->rigth );
 			while ( !__is_left_child( __x ) )
+			{
+				std::cout << "****** "<< __x->rigth->content.first << std::endl;
 				__x = __x->parent;
+			}
 			return __x->parent;
 		}
 
