@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/27 20:57:01 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/27 18:18:23 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ namespace ft
 		pointer & __end_node() { return __end_alloc_.first; }
 		const_pointer & __end_node() const { return __end_alloc_.first; }
 
+<<<<<<< HEAD
+	}; */
+=======
 		template < typename _NodePtr >
 		bool __is_left_child( _NodePtr __x )
 		{
@@ -134,25 +137,6 @@ namespace ft
 
 		public:
 
-			void print(const std::string& prefix = "", const ft::Node<_Tp>* node = NULL, bool isLeft = false) {
-				if (node == NULL)
-					node = __root_;
-				if (node != __end_node()) {
-					// std::cout << BKCOL << prefix << NOCOL;
-					// std::cout << BKCOL << (isLeft ? "├──" : "└──" ) << NOCOL;
-					if (!node->black)
-						std::cout << node->content.first << std::endl;
-					else {
-						if (node->content.first == -1)
-							std::cout << "nil"  << std::endl;
-						else
-							std::cout << node->content.first  << std::endl;
-					}
-					print(prefix + (isLeft ? "│   " : "    "), node->right, true);
-					print(prefix + (isLeft ? "│   " : "    "), node->left, false);
-				}
-			}
-
 		template< typename _NodePtr >
 		_NodePtr __next ( _NodePtr __x )
 		{
@@ -160,10 +144,8 @@ namespace ft
 				return __child_min( __x->rigth );
 			while ( !__is_left_child( __x ) )
 			{
-				std::cout << "****** "<< __x->content.first  << " " << __x->rigth->content.first << std::endl;
+				std::cout << "****** "<< __x->rigth->content.first << std::endl;
 				__x = __x->parent;
-				std::cout << "****** "<< __x->content.first  << " " << __x->rigth->content.first << std::endl;
-
 			}
 			return __x->parent;
 		}
@@ -212,5 +194,6 @@ namespace ft
 		}
 
 	};
+>>>>>>> 1931d6f6782bf835575a15e186565e8c50e20993
 }
 #endif 
