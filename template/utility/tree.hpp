@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/28 00:01:02 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/28 23:09:09 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,16 +178,13 @@ namespace ft
 		template< typename _NodePtr >
 			void __rightRotate ( _NodePtr __x )
 			{
-				// std::cout << " RR " << __x->content.first << std::endl;
 				_NodePtr __y = __x->left;
 				__x->left = __y->right;
-				
-				// std::cout << __x->content.first << std::endl;
 				if ( __x->left != __end_node() )
 					__y->left->parent = __x;
 				__y->parent = __x->parent;
-				// if ( __x->parent == __end_node() )
-				// 	__root_ = __x;
+				if ( __x->parent == __end_node()  )
+					__root_ = __y;
 				if ( __is_left_child( __x ) )
 					__x->parent->left = __y;
 				else 
@@ -195,6 +192,95 @@ namespace ft
 				__y->right = __x;
 				__x->parent = __y;
 			}
+
+			template< typename _NodePtr >
+			void __leftRotate ( _NodePtr __x )
+			{
+				_NodePtr __y = __x->right;
+				__x->right = __y->left;
+				if ( __x->right != __end_node() )
+					__y->right->parent = __x;
+				__y->parent = __x->parent;
+				if ( __x->parent == __end_node()  )
+					__root_ = __y;
+				if ( __is_left_child( __x ) )
+					__x->parent->left = __y;
+				else 
+					__x->parent->right= __y;
+				__y->left = __x;
+				__x->parent = __y;
+			}
+
+
+			template < typename _NodePtr >
+			_NodePtr  __caseRed ( _NodePtr __node, _NodePtr __uncle )
+			{
+				__node = __node->parent;
+				__node->black = true;
+				__node = __node->parent;
+				__node->black = __node == __root_;
+				__uncle->black = true;
+				return __node;
+			}
+
+			template < typename _NodePtr >
+			_NodePtr __caseBlack( _NodePtr __node, _NodePtr __uncle, bool __isLeft )
+			{
+				if ( !__is_left_child( __node ) )
+				{
+					__node = __node->parent;
+					__rotate( __node , __isLeft );
+				}
+				__node = __node->parent;
+				__node->black = true;
+				__node = __node->parent;
+				__node->black = false;
+				__rotate( __node, !__isLeft );
+				return __node;
+			}
+
+		template < typename _NodePtr >
+		void __rotate ( _NodePtr __node, bool __isLeft )
+		{
+			if ( !__isLeft )
+				__leftRotate( __node );
+			else
+				__rightRotate( __node );
+		}
+		
+		template < typename _NodePtr >
+		void __balanceTree( _NodePtr __root, _NodePtr __node )
+		{
+			__node->black = __node == __root;
+			while ( __node != __root && !__node->parent->black )
+			{
+				if ( __is_left_child( __node->parent ) )
+				{
+					_NodePtr __uncle = __node->parent->parent->right;
+					if ( __uncle != __end_node() && !__uncle->black )
+						__node = __caseRed( __node, __uncle);
+					else
+					{
+						__node = __caseBlack( __node, __uncle, true );
+						break ;
+					}
+				}
+				else
+				{
+					_NodePtr __uncle = __node->parent->parent->left;
+					if ( __uncle != __end_node() && !__uncle->black )
+						__node = __caseRed( __node, __uncle);
+					else
+					{
+						__node = __caseBlack( __node, __uncle, false );
+						break ;
+					}
+					
+				}
+			}
+		}
+
+			
 
 		explicit tree ( const allocator_type & __node_alloc_ = allocator_type() )
 		: __compare_( value_compare() ),
@@ -236,6 +322,10 @@ namespace ft
 						
 					}
 				}
+				__balanceTree( __root_, __checkLeaf.first );
+			/* 	__root_->parent = __end_node();
+				__end_node()->left = __root_;
+				__end_node()->right = __root_; */
 				return __checkLeaf;
 			}
 		}
