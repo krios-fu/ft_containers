@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/28 23:07:29 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/29 23:30:07 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,40 +24,102 @@
 int main ()
 {
 
-	 ft::pair<int, int> lol3(21,1);
-	 ft::pair<int, int> lol(12,12);
-	 ft::pair<int, int> loll(-42,12);
-
-	 ft::pair<int, int> lol2(42,42);
-	 ft::pair<int, int> lol4(1992,1);
-	 ft::pair<int, int> lol5(1993,1);
-	 ft::pair<int, int> lol6(22,1);
-	 ft::pair<int, int> lol7(43,1);
-	 ft::pair<int, int> lol8(41,1);
-
-	  ft::pair<int, int> lol9(1994,1);
-	 ft::pair<int, int> lol10(1995,1);
+	 ft::pair<int, int> lol(1,12);
+	 ft::pair<int, int> lol2(2,42);
+	 ft::pair<int, int> lol3(3,1);
+	 ft::pair<int, int> lol4(4,1);
+	 ft::pair<int, int> lol5(5,1);
+	 ft::pair<int, int> lol6(6,1);
+	 ft::pair<int, int> lol7(7,1);
+	 ft::pair<int, int> lol8(8,1);
+	  ft::pair<int, int> lol9(9,1);
+	 ft::pair<int, int> lol10(10,1);
+	 ft::pair<int, int> loll(11,12);
+	 ft::pair<int, int> lol12(12,12);
+	 ft::pair<int, int> lol13(1,12);
+	 ft::pair<int, int> lol14(13,12);
+	 ft::pair<int, int> lol15(42,12);
+	 ft::pair<int, int> lol16(0,12);
+	 ft::pair<int, int> lol17(111,12);
+	 ft::pair<int, int> lol18(110,12);
+	 ft::pair<int, int> lol19(1993,12);
+	 ft::pair<int, int> lol20(1994,12);
 
 
 
 
 
 	 
+	 
+
+
+
 
 	
-	// ft::Node<ft::pair<int, int> > n_lol(lol);
-	
-	ft::pair<ft::Node<ft::pair<int, int> > *, bool> aux;
+	// ft::pair<ft::Node<ft::pair<int, int> > *, bool> aux;
 	ft::tree< ft::pair<int, int> , std::less<ft::pair<int, int> > > tree_lol;
+
+
+	tree_lol.insert(lol);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol2);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol3);
+	tree_lol.print(); 
+	
+	tree_lol.insert(lol4);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol5);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol6);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol7);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol8);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol9);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol10);
+	tree_lol.print(); 
+
+	tree_lol.insert(loll);
+
+	tree_lol.print();
+	tree_lol.insert(lol12);
+	tree_lol.print();
+
+	// tree_lol.print(); 
+	tree_lol.insert(lol13);
+	tree_lol.print(); 
+
+	tree_lol.insert(lol14);
+	tree_lol.print();
+	tree_lol.insert(lol15);
+	tree_lol.print();
+		tree_lol.insert(lol16);
+	tree_lol.print();
+		tree_lol.insert(lol17);
+	tree_lol.print();
+		tree_lol.insert(lol18);
+	tree_lol.print();
+			tree_lol.insert(lol19);
+	tree_lol.print();
+				tree_lol.insert(lol20);
+	tree_lol.print();
+
 
 	// std::cout <<.first->content.first << std::endl;
 
 
-	aux = tree_lol.insert( lol4);
-	ft::Node<ft::pair<int, int> >  *aux3 = aux.first;
 
- aux =  tree_lol.insert( lol );
- aux =  tree_lol.insert( loll );
 
 
 	// aux2 = tree_lol.insert( lol );
@@ -70,32 +132,13 @@ int main ()
 	// std::cout << aux.first->content.first << " bool: " << aux.second << std::endl;
 
 
-	aux = tree_lol.insert( lol6);
-	ft::Node<ft::pair<int, int> >  *aux2 = aux.first;
-
-	aux = tree_lol.insert( lol5);
-
-	aux = tree_lol.insert( lol3);
-
-	aux = tree_lol.insert( lol2 );
-	// std::cout << aux.first->content.first << " bool: " << aux.second << std::endl;
-	// std::cout << aux.first->content.first << " bool: " << aux2->second << std::endl;
-	// std::cout << aux2.first->content.first << " bool: " << aux.second << std::endl;
-
- aux =  tree_lol.insert( lol7 );
- aux =  tree_lol.insert( lol8 );
-  aux =  tree_lol.insert( lol9 );
- aux =  tree_lol.insert( lol10 );
-
 	// std::cout << aux.first->content.first << " bool: " << aux2->second << std::endl;
 
 	//  std::cout << " ---> " << (tree_lol.__back(aux.first))->content.first << std::endl;
 
 
 
-	std::cout << "-----> " << aux2->content.first << std::endl;
 
-	tree_lol.print();
 
 	
 	
