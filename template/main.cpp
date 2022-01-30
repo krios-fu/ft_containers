@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/29 23:30:07 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/30 19:36:16 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main ()
 
 
 	
-	// ft::pair<ft::Node<ft::pair<int, int> > *, bool> aux;
+	ft::Node<ft::pair<int, int> >*aux;
 	ft::tree< ft::pair<int, int> , std::less<ft::pair<int, int> > > tree_lol;
 
 
@@ -81,7 +81,7 @@ int main ()
 	tree_lol.insert(lol7);
 	tree_lol.print(); 
 
-	tree_lol.insert(lol8);
+	aux = tree_lol.insert(lol8).first;
 	tree_lol.print(); 
 
 	tree_lol.insert(lol9);
@@ -93,7 +93,7 @@ int main ()
 	tree_lol.insert(loll);
 
 	tree_lol.print();
-	tree_lol.insert(lol12);
+ tree_lol.insert(lol12);
 	tree_lol.print();
 
 	// tree_lol.print(); 
@@ -102,18 +102,23 @@ int main ()
 
 	tree_lol.insert(lol14);
 	tree_lol.print();
-	tree_lol.insert(lol15);
+		tree_lol.insert(lol15);
 	tree_lol.print();
 		tree_lol.insert(lol16);
 	tree_lol.print();
 		tree_lol.insert(lol17);
 	tree_lol.print();
-		tree_lol.insert(lol18);
+	tree_lol.insert(lol18);
 	tree_lol.print();
-			tree_lol.insert(lol19);
+	tree_lol.insert(lol19);
 	tree_lol.print();
-				tree_lol.insert(lol20);
+	tree_lol.insert(lol20);
 	tree_lol.print();
+
+	std::cout << "Deleted num " << aux->content.first << std::endl;
+	tree_lol.__removeTree(aux);
+	tree_lol.print();
+
 
 
 	// std::cout <<.first->content.first << std::endl;

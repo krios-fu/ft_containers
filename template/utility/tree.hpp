@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/29 23:38:39 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/30 21:48:08 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ namespace ft
 			return __x;
 		}
 
+		
+
 
 
 		template < typename _NodePtr>
@@ -108,7 +110,7 @@ namespace ft
 			return ft::make_pair( __x, true );
 		}
 
-		pointer __vconstructNode( const value_type & __x )
+		pointer __tconstructNode( const value_type & __x )
 		{
 			pointer tmpNode = __node_alloc().allocate( 1 );
 			__node_alloc().construct( tmpNode, __x );
@@ -120,7 +122,7 @@ namespace ft
 			return tmpNode;
 		}
 
-		pointer __vconstructNode( const value_type & __x, pointer __parent )
+		pointer __tconstructNode( const value_type & __x, pointer __parent )
 		{
 			pointer tmpNode = __node_alloc().allocate( 1 );
 			__node_alloc().construct( tmpNode, __x );
@@ -130,6 +132,11 @@ namespace ft
 			tmpNode->black = false;
 			__size_++;
 			return tmpNode;
+		}
+		void __tdestroyNode( pointer __node )
+		{
+			__node_alloc().destroy( __node );
+			__node_alloc().deallocate( __node, 1 );
 		}
 		
 		template< typename _NodePtr >
@@ -289,13 +296,162 @@ namespace ft
 				}
 
 			}
-	/* 		__root_->parent = __end_node();
-			__end_node()->left = __root_;
-			__end_node()->right = __root_; */
+		}
+	
+		template < typename _NodePtr >
+		void __removeTree( _NodePtr __dNode )
+		{
+			_NodePtr __hole = ( __dNode->left == __end_node() || __dNode->right == __end_node() ) ? 
+								__dNode : __back( __dNode );
+			
+			_NodePtr __childHole  = __hole->left != __end_node() ? __hole->left : __hole->right;
+			
+			_NodePtr __uncle = __end_node();
 
+
+			if ( __childHole != __end_node()  ) 
+				__childHole->parent = __hole->parent;
+
+			if ( __is_left_child( __hole ) )
+			{
+				__hole->parent->left = __childHole;
+				if ( __hole != __root_ )
+					__uncle = __hole->parent->right;
+				else
+					__root_ = __childHole;
+			}
+			else 
+			{
+				__hole->parent->right = __childHole;
+				__uncle = __hole->parent->left;
+			}
+
+			bool __colorRemove = __hole->black;
+
+			if ( __hole != __dNode )
+			{
+				__hole->parent = __dNode->parent;
+				if ( __is_left_child( __dNode ) )
+					__hole->parent->left = __hole;
+				else
+					__hole->parent->right = __hole;
+				__hole->left = __dNode->left;
+				__hole->left->parent = __hole;
+				__hole->right = __dNode->right;
+				if ( __hole->right != __end_node() )
+					__hole->right->parent = __hole;
+				__hole->black = __dNode->black;
+				if ( __root_ == __dNode )
+					__root_ = __hole;
+			}
+
+			__tdestroyNode( __dNode );
+			if ( __colorRemove && __root_ != __end_node() )
+			{
+				if ( __childHole != __end_node() )
+					__childHole->black = true;
+				else 
+					__balanceRemove(__uncle, __childHole );
+			}
+			
 		}
 
-			
+		template < typename _NodePtr >
+		void __balanceRemove( _NodePtr __uncle, _NodePtr __childHole )
+		{
+			while ( 42 )
+			{
+				if ( !__is_left_child( __uncle ) )
+				{
+					if ( !__uncle->black )
+					{
+						__uncle->black = true;
+						__uncle->parent->black = false;
+						__leftRotate( __uncle->parent );
+						
+						if ( __root_ == __uncle->left )
+							__root_ = __uncle;
+						__uncle = __uncle->left->right;
+					}
+					
+					if ( __uncle->left->black  && __uncle->right->black )
+					{
+						__uncle->black = false;
+						__childHole = __uncle->parent;
+
+						if ( __childHole == __root_ || !__childHole->black )
+						{
+							__childHole->black = true;
+							break;
+						}
+						__uncle = __is_left_child( __childHole ) ?
+							__childHole->parent->right :
+							__childHole->parent->left;
+					}
+					else
+					{
+						if ( __uncle->right == __end_node() || __uncle->right->black )
+						{
+							__uncle->left->black = true;
+							__uncle->black = false;
+							__rightRotate( __uncle );
+							__uncle =  __uncle->parent;
+						}
+
+						__uncle->black = __uncle->parent->black;
+						__uncle->parent->black = true;
+						__uncle->right->black = true;
+						__leftRotate( __uncle->parent );
+						break;
+					}
+				}
+				else
+				{
+					if ( !__uncle->black )
+					{
+						__uncle->black = true;
+						__uncle->parent->black = false;
+						__rightRotate( __uncle->parent );
+						
+						if ( __root_ == __uncle->right )
+							__root_ = __uncle;
+						__uncle = __uncle->right->left;
+					}
+					if ( __uncle->left->black && __uncle->right->black )
+					{
+						__uncle->black = false;
+						__childHole = __uncle->parent;
+
+						if ( !__childHole->black ||  __childHole == __root_   )
+						{
+							__childHole->black = true;
+							break;
+						}
+						__uncle = __is_left_child( __childHole ) ?
+							__childHole->parent->right :
+							__childHole->parent->left;
+					}
+					else
+					{
+						if ( __uncle->left == __end_node() || __uncle->left->black )
+						{
+							__uncle->right->black = true;
+							__uncle->black = false;
+							__leftRotate( __uncle );
+							__uncle =  __uncle->parent;
+						}
+
+						__uncle->black = __uncle->parent->black;
+						__uncle->parent->black = true;
+						__uncle->left->black = true;
+						__rightRotate( __uncle->parent );
+						break;
+					}
+					
+				}
+			}
+		
+		}
 
 		explicit tree ( const allocator_type & __node_alloc_ = allocator_type() )
 		: __compare_( value_compare() ),
@@ -316,7 +472,7 @@ namespace ft
 		{
 			if ( __root_ == __end_node() )
 			{
-				__root_ = __vconstructNode( __x );
+				__root_ = __tconstructNode( __x );
 				__end_node()->left = __root_;
 				__end_node()->right = __root_;
 				__root_->black = true;
@@ -330,13 +486,13 @@ namespace ft
 				{
 					if ( __compare_( __checkLeaf.first->content, __x ) )
 					{
-						__checkLeaf.first->right = __vconstructNode( __x, __checkLeaf.first);
+						__checkLeaf.first->right = __tconstructNode( __x, __checkLeaf.first);
 						__checkLeaf.first = __checkLeaf.first->right;
 						
 					}
 					else if ( __compare_( __x,__checkLeaf.first->content ) )
 					{
-						__checkLeaf.first->left= __vconstructNode( __x, __checkLeaf.first);
+						__checkLeaf.first->left= __tconstructNode( __x, __checkLeaf.first);
 						__checkLeaf.first = __checkLeaf.first->left;
 						
 					}
