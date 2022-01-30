@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/30 21:48:08 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/30 22:09:40 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ namespace ft
 
 		pointer & __end_node() { return __end_alloc_.first; }
 		const_pointer & __end_node() const { return __end_alloc_.first; }
+
+
+
+		pointer & __root() { return __root_ };
+		const_pointer & __root() { return __root_ };
 
 		template < typename _NodePtr >
 		bool __is_left_child( _NodePtr __x )
@@ -476,6 +481,7 @@ namespace ft
 				__end_node()->left = __root_;
 				__end_node()->right = __root_;
 				__root_->black = true;
+				size()++;
 				return ft::make_pair<pointer, bool>( __root_, true );
 			}
 			else
@@ -506,6 +512,9 @@ namespace ft
 				return __checkLeaf;
 			}
 		}
+		
+		size_type& size() { return __size_; }
+		size_type& size() const { return __size_; }
 
 	};
 }
