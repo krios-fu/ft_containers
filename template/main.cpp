@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/31 01:28:17 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/31 23:14:25 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "./utility/utils.hpp"
 #include "./containers/map.hpp"
 #include "./utility/tree.hpp"
+#include "./utility/map_iterator.hpp"
+
 // #include <utility>
 // #include <algorithm>
 //  #include <vector>
@@ -23,6 +25,11 @@
 
 int main ()
 {
+
+
+
+	
+
 
 	 ft::pair<int, int> lol(1,12);
 	 ft::pair<int, int> lol2(2,42);
@@ -58,6 +65,10 @@ int main ()
 	
 	ft::Node<ft::pair<int, int> >*aux, *aux2, *aux3;
 	ft::tree< ft::pair<int, int> , std::less<ft::pair<int, int> > > tree_lol;
+
+	std::map<int, int > treee;
+	std::cout << "SIZE : " << tree_lol.max_size() << std::endl;
+	std::cout << "SIZE : " << treee.max_size() << std::endl;
 
 
 	tree_lol.insert(lol);
@@ -115,16 +126,48 @@ int main ()
 	 tree_lol.insert(lol20);
 	tree_lol.print();
 
-	std::cout << "Deleted num " << aux->content.first << std::endl;
 
-	tree_lol.remove(aux);
-	tree_lol.print();
-	std::cout << "SIZE : " << tree_lol.size() << std::endl;
-	tree_lol.remove(aux2);
+	 tree_lol.remove(aux);
+	 std::cout << "DELETE " << std::endl;
+	 tree_lol.print();
+
+	// tree_lol.remove(aux2);
 	tree_lol.print();
 	tree_lol.remove(aux3);
 	tree_lol.print();
+	// tree_lol.clear();
+	std::cout << "SIZE : " << tree_lol.size() << std::endl; 
+	tree_lol.print();
+	 tree_lol.insert(lol20);
+	tree_lol.print();
 	std::cout << "SIZE : " << tree_lol.size() << std::endl;
+	
+	std::cout << "empty : " << tree_lol.empty() << std::endl;
+
+
+
+	std::cout << "Num " << aux2->content.first << std::endl;
+
+
+	ft::mapIterator< ft::Node<ft::pair<int, int> >* , ft::pair<int, int> >itera = tree_lol.end();
+
+	
+	 std::cout << "-----> " << (--itera)->first << std::endl;
+	/*std::cout << "-----> " << (--itera)->first << std::endl;
+	std::cout << "-----> " << (--itera)->first << std::endl;
+ */
+
+
+
+
+
+
+	
+}
+
+
+	
+
 
 
 
@@ -155,7 +198,7 @@ int main ()
 
 	
 	
-} 
+
 
 
 

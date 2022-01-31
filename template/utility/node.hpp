@@ -6,10 +6,12 @@
 namespace ft
 {
 
-template<class T>
+template<typename T>
 struct Node
 {
-	T					content;
+	public : 
+	typedef T			value_type;
+	value_type			content;
 	bool				black;
 	Node*				parent;
 	Node*				right;
@@ -28,6 +30,8 @@ struct Node
 	  parent( ft::nullptr_t ),
 	  right( ft::nullptr_t ),
 	  left( ft::nullptr_t ){}
+
+	~Node(){}
 
 	bool isBlack()
 	{

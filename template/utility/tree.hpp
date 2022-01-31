@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/31 01:26:35 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/01/31 23:16:48 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "./utils.hpp"
 # include <memory>
 # include "../utility/node.hpp"
+#include "../utility/map_iterator.hpp"
+
 # include <map>
 #include <iostream>
 
@@ -29,13 +31,17 @@ namespace ft
 	{
 		public:
 
-		typedef _Tp															value_type;
+		typedef _Tp  														value_type;
 		typedef _Compare													value_compare;
-		typedef _Allocator													allocator_type;
-		typedef ft::Node<_Tp>												node_type;
+		typedef _Allocator  												allocator_type;
+		typedef ft::Node<_Tp>   											node_type;
 		typedef typename _Allocator::template rebind<node_type>::other		node_allocator;
 		typedef typename node_allocator::pointer							pointer;
 		typedef typename node_allocator::const_pointer						const_pointer;
+		typedef typename ft::mapIterator<pointer, value_type>				iterator;
+		typedef typename ft::mapIterator<const_pointer, value_type>			const_iterator;
+		typedef typename ft::reverse_iterator<iterator>  					reverse_iterator;
+		typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 		typedef typename allocator_type::size_type							size_type;
 		typedef typename allocator_type::difference_type					differences_type;
 
@@ -58,8 +64,6 @@ namespace ft
 		pointer & __root() { return __root_; };
 		const_pointer & __root() const { return __root_; };
 
-
-
 		bool __is_left_child( pointer __x )
 		{
 			return __x == __x->parent->left;
@@ -77,6 +81,24 @@ namespace ft
 			while ( __x->right != __end_node() )
 				__x = __x->right;
 			return __x;
+		}
+
+		pointer __successor( pointer __x )
+		{
+			if ( __x->right != __end_node() )
+				return __child_min( __x->right );
+			while ( !__is_left_child( __x ) )
+				__x = __x->parent;
+			return __x->parent;
+		}
+
+		pointer __predecessor ( pointer __x )
+		{
+			if ( __x->left != __end_node() )
+				return __child_max( __x->left );
+			while ( __is_left_child( __x ) )
+				__x = __x->parent;
+			return __x->parent;
 		}
 
 		ft::pair< pointer, bool >
@@ -131,25 +153,19 @@ namespace ft
 			__node_alloc().deallocate( __node, 1 );
 			size()--;
 		}
+
+		void __tdestroy_alloc_tree( pointer __node )
+		{
+			if ( __node != __end_node() )
+			{
+				__tdestroy_alloc_tree( __node->right );
+				__tdestroy_alloc_tree( __node->left );
+
+				__tdestroy_alloc_node( __node );
+			}
+			
+		}
 		
-		pointer __next ( pointer __x )
-		{
-			if ( __x->right != __end_node() )
-				return __child_min( __x->right );
-			while ( !__is_left_child( __x ) )
-				__x = __x->parent;
-			return __x->parent;
-		}
-
-		pointer __back ( pointer __x )
-		{
-			if ( __x->left != __end_node() )
-				return __child_max( __x->left );
-			while ( __is_left_child( __x ) )
-				__x = __x->parent;
-			return __x->parent;
-		}
-
 		void __right_rotate ( pointer __node )
 		{
 			pointer __tmp = __node->left;
@@ -279,7 +295,7 @@ namespace ft
 						__uncle->black = true;
 						__uncle->parent->black = false;
 						__left_rotate ( __uncle->parent );
-						
+
 						if ( __root() == __uncle->left )
 							__root() = __uncle;
 						__uncle = __uncle->left->right;
@@ -359,8 +375,7 @@ namespace ft
 				}
 			}
 		}
-		public:
-
+	public:
 
 		explicit tree ( const allocator_type & __node_alloc_ = allocator_type() )
 		: __compare_( value_compare() ),
@@ -377,10 +392,17 @@ namespace ft
 			__root() = __end_node();
 		}
 
+		~tree ()
+		{
+			std::cout << "destroy treeeeee \n";
+			__tdestroy_alloc_tree( __root() );
+			__tdestroy_alloc_node( __end_node() );
+		}
+
 			void print(const std::string& prefix = "", const ft::Node<_Tp>* node = NULL, bool isLeft = false) {
 				if (node == NULL)
 					node = __root_;
-				if (node != __end_node()) {
+				if (node != __end_node() ) {
 					 std::cout << BLACK << prefix << WHITE ;
 					 std::cout << BLACK << (isLeft ? "├──" : "└──" ) << WHITE;
 					if (!node->black)
@@ -401,7 +423,7 @@ namespace ft
 			pointer __hole = (  __dNode->left == __end_node() ||
 								__dNode->right == __end_node() ) ?
 								__dNode :
-								__back( __dNode );
+								__predecessor ( __dNode );
 
 			pointer __childHole  = __hole->left != __end_node() ? __hole->left : __hole->right;
 
@@ -492,7 +514,50 @@ namespace ft
 		}
 		
 		size_type& size() { return __size_; }
-		size_type& size() const { return __size_; }
+		const size_type& size() const { return __size_; }
+
+		pointer find ( value_type const & __x )
+		{
+			pointer __tmp = __root();
+
+			while ( __tmp != __end_node() )
+			{
+				if ( __compare_( __tmp->content, __x ) )
+					__tmp = __tmp->right;
+				else if ( __compare_( __x, __tmp->content ) )
+					__tmp = __tmp->left;
+				else
+					return __tmp;
+			}
+			return NULL;
+		}
+
+		iterator		begin() { return iterator( __child_min( __root() ), __end_node() ); }
+		iterator		end() { return iterator(__end_node(), __end_node()); }
+		const_iterator	begin() const { return const_iterator( __child_min( __root() ), __end_node() ); }
+		const_iterator	end() const { return const_iterator( __end_node(),__end_node() ); }
+
+		reverse_iterator		rbegin() { return reverse_iterator( end() ); }
+		reverse_iterator		rend() { return reverse_iterator( begin() ); }
+		const_reverse_iterator	rbegin() const { return const_reverse_iterator( end() ); }
+		const_reverse_iterator	rend() const { return const_reverse_iterator( begin() ); }
+			
+		value_compare & value_comp() { return __compare_; }
+
+		const value_compare & value_comp() const { return __compare_; }
+
+		size_type max_size() const { return __node_alloc().max_size(); }
+
+		void clear()
+		{
+			__tdestroy_alloc_tree( __root() );
+			size() = 0;
+			__root() = __end_node();
+		}
+
+		bool empty() const { return ( size() ) ? false : true; }
+		allocator_type get_allocator() const { return __node_alloc(); }
+
 	};
 }
 
