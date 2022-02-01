@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/31 23:16:48 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:12:00 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,22 @@ namespace ft
 			return __x->parent;
 		}
 
+		pointer __find ( value_type const & __x )
+		{
+			pointer __tmp = __root_;
+
+			while ( __tmp != __nil_ )
+			{
+				if ( __compare_( __tmp->content, __x ) )
+					__tmp = __tmp->right;
+				else if ( __compare_( __x, __tmp->content ) )
+					__tmp = __tmp->left;
+				else
+					return __tmp;
+			}
+			return __nil_ ;
+		}
+
 		ft::pair< pointer, bool >
 			__treeLeaf ( pointer __x, value_type const & __value )
 		{
@@ -119,7 +135,7 @@ namespace ft
 					__x = __x->left;
 				}
 				else
-					return ft::make_pair( __x, false );
+					return ft::make_pair(__x, false );
 			}
 			return ft::make_pair( __x, true );
 		}
@@ -375,10 +391,22 @@ namespace ft
 				}
 			}
 		}
+
+		void __copy_tree (pointer __root , pointer __nill )
+		{
+			if ( __root != __nill )
+			{
+				insert( __root->content );
+				if ( __root->right != __nill )
+					insert( __root->right->content );
+				__copy_tree(__root->left, __nill );
+				__copy_tree(__root->right, __nill );
+			}
+		}
 	public:
 
-		explicit tree ( const allocator_type & __node_alloc_ = allocator_type() )
-		: __compare_( value_compare() ),
+		explicit tree ( const value_compare & __comp = value_compare(), const allocator_type & __node_alloc_ = allocator_type() )
+		: __compare_( __comp  ),
 		  __end_alloc_( ft::make_pair ( ft::nullptr_t , __node_alloc_ ) )
 		{
 			__size_ = 0;
@@ -390,6 +418,32 @@ namespace ft
 			__nil_->left = __nil_;
 			__end_node() = __nil_;
 			__root() = __end_node();
+		}
+
+		tree( const tree& __other )
+		{
+			*this = __other;
+		}
+
+		tree& operator= (const tree& __other )
+		{
+			if ( this != &__other )
+			{
+				clear();
+				__tdestroy_alloc_node( __end_node() );
+				__node_alloc() = __other.__node_alloc();
+				__nil_ = __node_alloc().allocate( 1 );
+				__node_alloc().construct( __nil_, value_type() );
+				__nil_->black = true;
+				__nil_->parent = __nil_;
+				__nil_->right = __nil_;
+				__nil_->left = __nil_;
+				__end_node() = __nil_;
+				__root() = __end_node();
+				__compare_ = __other.__compare_;
+				__copy_tree( __other.__root_, __other.__nil_ );
+			}
+			return *this;
 		}
 
 		~tree ()
@@ -418,8 +472,9 @@ namespace ft
 				}
 			}
 
-		void remove( pointer __dNode )
+		void remove( value_type const & __x )
 		{
+			pointer __dNode = __find( __x );
 			pointer __hole = (  __dNode->left == __end_node() ||
 								__dNode->right == __end_node() ) ?
 								__dNode :
@@ -475,7 +530,7 @@ namespace ft
 			}
 		}
 
-		ft::pair< pointer, bool> insert ( value_type & __x )
+		ft::pair< iterator, bool> insert ( value_type const & __x )
 		{
 			if ( __root() == __end_node() )
 			{
@@ -483,7 +538,7 @@ namespace ft
 				__end_node()->left = __root();
 				__end_node()->right = __root();
 				__root()->black = true;
-				return ft::make_pair<pointer, bool>( __root(), true );
+				return ft::make_pair( iterator( __root(), __end_node() ), true );
 			}
 			else
 			{
@@ -504,47 +559,44 @@ namespace ft
 						
 					}
 					__balance_tree_after_insert( __root(), __checkLeaf.first );
+
+					return ft::make_pair( iterator(__checkLeaf.first, __end_node() ), true );
 				}
 				
 				__root()->parent = __end_node();
 				__end_node()->left = __root();
 				__end_node()->right = __root();
-				return __checkLeaf;
+				return ft::make_pair( iterator( __checkLeaf.first, __end_node() ), false );
+;
 			}
 		}
 		
 		size_type& size() { return __size_; }
 		const size_type& size() const { return __size_; }
 
-		pointer find ( value_type const & __x )
+		iterator find ( value_type const & __x )
 		{
-			pointer __tmp = __root();
-
-			while ( __tmp != __end_node() )
-			{
-				if ( __compare_( __tmp->content, __x ) )
-					__tmp = __tmp->right;
-				else if ( __compare_( __x, __tmp->content ) )
-					__tmp = __tmp->left;
-				else
-					return __tmp;
-			}
-			return NULL;
+			return iterator ( __find( __x ), __nil_ );
 		}
+
+		const_iterator find ( value_type const & __x ) const
+		{
+			return const_iterator ( __find( __x ), __nil_ );
+		}
+
+
 
 		iterator		begin() { return iterator( __child_min( __root() ), __end_node() ); }
 		iterator		end() { return iterator(__end_node(), __end_node()); }
 		const_iterator	begin() const { return const_iterator( __child_min( __root() ), __end_node() ); }
-		const_iterator	end() const { return const_iterator( __end_node(),__end_node() ); }
+		const_iterator	end() const { return const_iterator( __nil_ , __nil_); }
 
 		reverse_iterator		rbegin() { return reverse_iterator( end() ); }
 		reverse_iterator		rend() { return reverse_iterator( begin() ); }
 		const_reverse_iterator	rbegin() const { return const_reverse_iterator( end() ); }
 		const_reverse_iterator	rend() const { return const_reverse_iterator( begin() ); }
 			
-		value_compare & value_comp() { return __compare_; }
-
-		const value_compare & value_comp() const { return __compare_; }
+		value_compare value_comp() const  { return __compare_; }
 
 		size_type max_size() const { return __node_alloc().max_size(); }
 

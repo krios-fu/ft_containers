@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/01/31 23:14:25 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/01 21:51:01 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,145 +25,17 @@
 
 int main ()
 {
+	ft::map<int, int > map1;
 
+	map1[12] = 42;
 
+	// std::cout << "*** " << map1[12];
 
-	
-
-
-	 ft::pair<int, int> lol(1,12);
-	 ft::pair<int, int> lol2(2,42);
-	 ft::pair<int, int> lol3(3,1);
-	 ft::pair<int, int> lol4(4,1);
-	 ft::pair<int, int> lol5(5,1);
-	 ft::pair<int, int> lol6(6,1);
-	 ft::pair<int, int> lol7(7,1);
-	 ft::pair<int, int> lol8(8,1);
-	  ft::pair<int, int> lol9(9,1);
-	 ft::pair<int, int> lol10(10,1);
-	 ft::pair<int, int> loll(11,12);
-	 ft::pair<int, int> lol12(12,12);
-	 ft::pair<int, int> lol13(1,12);
-	 ft::pair<int, int> lol14(13,12);
-	 ft::pair<int, int> lol15(42,12);
-	 ft::pair<int, int> lol16(0,12);
-	 ft::pair<int, int> lol17(111,12);
-	 ft::pair<int, int> lol18(110,12);
-	 ft::pair<int, int> lol19(1993,12);
-	 ft::pair<int, int> lol20(1994,12);
-
-
-
-
-
-	 
-	 
-
-
-
-
-	
-	ft::Node<ft::pair<int, int> >*aux, *aux2, *aux3;
-	ft::tree< ft::pair<int, int> , std::less<ft::pair<int, int> > > tree_lol;
-
-	std::map<int, int > treee;
-	std::cout << "SIZE : " << tree_lol.max_size() << std::endl;
-	std::cout << "SIZE : " << treee.max_size() << std::endl;
-
-
-	tree_lol.insert(lol);
-	tree_lol.print(); 
-
-	tree_lol.insert(lol2);
-	tree_lol.print(); 
-
-	tree_lol.insert(lol3);
-	tree_lol.print(); 
-	
-	tree_lol.insert(lol4);
-	tree_lol.print(); 
-
-	tree_lol.insert(lol5);
-	tree_lol.print(); 
-
-	tree_lol.insert(lol6);
-	tree_lol.print(); 
-
-	 tree_lol.insert(lol7);
-	tree_lol.print(); 
-
-	aux = tree_lol.insert(lol8).first;
-	tree_lol.print(); 
-
-	tree_lol.insert(lol9);
-	tree_lol.print(); 
-
-	tree_lol.insert(lol10);
-	tree_lol.print(); 
-
-	tree_lol.insert(loll);
-
-	tree_lol.print();
- tree_lol.insert(lol12);
-	tree_lol.print();
-
-	// tree_lol.print(); 
-	tree_lol.insert(lol13);
-	tree_lol.print(); 
-
-	tree_lol.insert(lol14);
-	tree_lol.print();
-		tree_lol.insert(lol15);
-	tree_lol.print();
-		aux3 = tree_lol.insert(lol16).first;
-	tree_lol.print();
-		tree_lol.insert(lol17);
-	tree_lol.print();
-	aux2 = tree_lol.insert(lol18).first;
-	tree_lol.print();
-	tree_lol.insert(lol19);
-	tree_lol.print();
-	 tree_lol.insert(lol20);
-	tree_lol.print();
-
-
-	 tree_lol.remove(aux);
-	 std::cout << "DELETE " << std::endl;
-	 tree_lol.print();
-
-	// tree_lol.remove(aux2);
-	tree_lol.print();
-	tree_lol.remove(aux3);
-	tree_lol.print();
-	// tree_lol.clear();
-	std::cout << "SIZE : " << tree_lol.size() << std::endl; 
-	tree_lol.print();
-	 tree_lol.insert(lol20);
-	tree_lol.print();
-	std::cout << "SIZE : " << tree_lol.size() << std::endl;
-	
-	std::cout << "empty : " << tree_lol.empty() << std::endl;
-
-
-
-	std::cout << "Num " << aux2->content.first << std::endl;
-
-
-	ft::mapIterator< ft::Node<ft::pair<int, int> >* , ft::pair<int, int> >itera = tree_lol.end();
-
-	
-	 std::cout << "-----> " << (--itera)->first << std::endl;
-	/*std::cout << "-----> " << (--itera)->first << std::endl;
-	std::cout << "-----> " << (--itera)->first << std::endl;
- */
-
-
-
-
-
-
+	// ft::map<int, int >::key_type k(12);
+	// map1.erase( k );
 	
 }
+
 
 
 	
