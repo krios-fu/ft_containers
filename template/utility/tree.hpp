@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/01 22:12:00 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/02 01:35:00 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,15 @@ namespace ft
 					return __tmp;
 			}
 			return __nil_ ;
+		}
+
+		template < typename __Sw >
+		void __swap( __Sw &a, __Sw  &b)
+		{
+			__Sw  c;
+			c = a;
+			a = b;
+			b = c;
 		}
 
 		ft::pair< pointer, bool >
@@ -475,6 +484,9 @@ namespace ft
 		void remove( value_type const & __x )
 		{
 			pointer __dNode = __find( __x );
+
+			if (__dNode == __end_node() )
+				return ;
 			pointer __hole = (  __dNode->left == __end_node() ||
 								__dNode->right == __end_node() ) ?
 								__dNode :
@@ -519,15 +531,17 @@ namespace ft
 				if ( __root() == __dNode )
 					__root() = __hole;
 			}
+				__tdestroy_alloc_node( __dNode );
 
-			__tdestroy_alloc_node( __dNode );
 			if ( __colorRemove && __root() != __end_node() )
 			{
+				
 				if ( __childHole != __end_node() )
 					__childHole->black = true;
 				else
 					__balance_tree_after_remove( __uncle, __childHole );
 			}
+
 		}
 
 		ft::pair< iterator, bool> insert ( value_type const & __x )
@@ -586,9 +600,9 @@ namespace ft
 
 
 
-		iterator		begin() { return iterator( __child_min( __root() ), __end_node() ); }
-		iterator		end() { return iterator(__end_node(), __end_node()); }
-		const_iterator	begin() const { return const_iterator( __child_min( __root() ), __end_node() ); }
+		iterator		begin() { return iterator( __child_min( __root_ ), __nil_ ); }
+		iterator		end() { return iterator(__nil_, __nil_); }
+		const_iterator	begin() const { return const_iterator( __child_min( __root_ ), __nil_); }
 		const_iterator	end() const { return const_iterator( __nil_ , __nil_); }
 
 		reverse_iterator		rbegin() { return reverse_iterator( end() ); }
@@ -609,6 +623,14 @@ namespace ft
 
 		bool empty() const { return ( size() ) ? false : true; }
 		allocator_type get_allocator() const { return __node_alloc(); }
+
+		void	swap( tree& __other_)
+		{
+				__swap(__root_, __other_.__root_);
+				__swap(__size_, __other_.__size_);
+				__swap(__end_alloc_, __other_.__end_alloc_);
+				__swap(__compare_, __other_.__compare_);
+		}
 
 	};
 }

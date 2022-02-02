@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:15:45 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/01 21:00:17 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/02 01:23:22 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ namespace ft
 		template< typename _NodePtr, typename _ValueT >
 		mapIterator& operator=( const mapIterator<_NodePtr, _ValueT > & __x )
 		{
-			__node_ = __x.getNode();
-			__end_node_ = __x.getEndNode();
+			__node_ = __x.__node_;
+			__end_node_ = __x.__end_node_;
 			return *this;
 		}
 
@@ -149,7 +149,7 @@ namespace ft
 		
 	};
 
-	template < typename _N1, typename _V1, typename _N2, typename _V2 >
+	template < typename _N1, typename _N2, typename _V1, typename _V2 >
 	bool operator== ( const ft::mapIterator<_N1, _V1> __x, const ft::mapIterator<_N2, _V2> __y )
 	{
 		return __x.getNode() == __y.getNode() ;
@@ -161,7 +161,7 @@ namespace ft
 		return __x.getNode() < __y.getNode();
 	}
 
-	template < typename _N1, typename _V1, typename _N2, typename _V2 >
+	template < typename _N1, typename _N2, typename _V1, typename _V2 >
 	bool operator!= ( const ft::mapIterator<_N1, _V1> __x, const ft::mapIterator<_N2, _V2> __y )
 	{
 		return !( __x == __y);

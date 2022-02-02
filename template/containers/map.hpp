@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:08 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/01 22:11:36 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/02 01:39:17 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ class map
 
 		__base __tree_;
 		ft::pair<key_compare, allocator_type>			__comp_alloc;
+
+		template < typename __Sw >
+		void __swap( __Sw &a, __Sw  &b)
+		{
+			__Sw  c;
+			c = a;
+			a = b;
+			b = c;
+		}
 
 	public:
 
@@ -160,7 +169,7 @@ class map
 	)
 	{
 		for(; __first != __last; ++__first )
-			__tree_.insert(  *__first );
+			__tree_.insert( *__first );
 		
 	}
 
@@ -181,15 +190,15 @@ class map
 
 	void erase( iterator __first, iterator __last )
 	{
-		for (; __first != __last; ++__first)
-			__tree_.remove(  *__first );
+		for (; __first != __last; )
+			erase( __first++ );
 	}
 
 	size_type erase( const key_type & __k )
 	{
 		iterator __f = find( __k );
 		
-		if ( __k != end() )
+		if ( __f != end() )
 		{
 			__tree_.remove( *__f );
 			return 1;
@@ -207,7 +216,17 @@ class map
 	key_compare key_comp() const { return __comp_alloc.first; };
 	
 	value_compare value_comp() const { return __tree_.value_comp(); }
+
+	void swap( map& __other )
+	{
+		__swap( __comp_alloc, __other.__comp_alloc );
+		__tree_.swap( __other.__tree_ );
+	}
 	
+	void print()
+	{
+		__tree_.print();
+	}
 };
 
 }

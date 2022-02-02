@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/01 21:51:01 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/02 01:39:00 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,45 @@
 int main ()
 {
 	ft::map<int, int > map1;
+	ft::map<int, int > map2;
 
-	map1[12] = 42;
+
+	
+	
+
+	// map2.insert(12);
+
+
+
+	//  map1.print();
+
+	
+
+	for (int i = 4; i < 10 ; i++ )
+		map1[i] = i;
+
+	for (int i = 10; i < 20 ; i++ )
+		map2[i] = i;
+
+
+	 map1.print();
+	 map2.print();
+
+	 map1.swap(map2);
+	 
+	 	 map1.print();
+	 map2.print();
+
+
+
+	// map1.erase(map1.begin(), --(map1.end()));
+	// map1.clear();
+
+	//  map1.print();
+
+	// map2.print();
+	// map1.erase( map1.begin(), map1.end() );
+	// map1.print();
 
 	// std::cout << "*** " << map1[12];
 
