@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:08 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/01 22:11:36 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/01 22:13:16 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ class map
 		return __tree_.find( ft::make_pair( __key, mapped_type() ) );
 	}
 
-	void erase (iterator __pos )
+	void erase ( iterator __pos )
 	{
 		__tree_.remove( *__pos );
 	}
