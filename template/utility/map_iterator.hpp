@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:15:45 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/01 21:00:17 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/02 23:41:18 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ namespace ft
 	class mapIterator
 	{
 		public:
-				typedef _Vt												value_type;
-				typedef ptrdiff_t 										difference_type;
-				typedef typename std::bidirectional_iterator_tag		iterator_category;
-				typedef _Node											node_pointer;
-				typedef value_type*										pointer;
-				typedef value_type&										reference;
+				typedef _Vt															value_type;
+				typedef typename std::bidirectional_iterator_tag					iterator_category;
+				typedef typename ft::iterator_traits<_Node>::value_type				node;
+				typedef typename ft::iterator_traits<_Node>::difference_type		difference_type;
+				typedef typename ft::iterator_traits<_Node>::pointer				node_pointer;
+				typedef typename ft::iterator_traits<_Node>::reference				node_reference;
+				typedef value_type*													pointer;
+				typedef value_type&													reference;
 
 				protected:
 
@@ -61,7 +63,10 @@ namespace ft
 		public:
 
 		~mapIterator(){}
-
+		mapIterator() 
+		: __node_(ft::nullptr_t),
+		 __end_node_(ft::nullptr_t)
+		{}
 
 		explicit mapIterator( node_pointer __node , node_pointer __end_node )
 			: __node_( __node ),
@@ -69,18 +74,24 @@ namespace ft
 		{
 		}
 
-		template< typename _NodePtr, typename _ValueT >
-		mapIterator ( const mapIterator<_NodePtr, _ValueT> & __x )
-		{
-			__node_ = __x.__node_;
-			__end_node_ = __x.__end_node_;
-		}
 
 		template< typename _NodePtr, typename _ValueT >
-		mapIterator& operator=( const mapIterator<_NodePtr, _ValueT > & __x )
+		mapIterator ( const mapIterator<_NodePtr, _ValueT> & __x )
+		: __node_(__x.base() ),
+		  __end_node_(__x.end_base() )
 		{
-			__node_ = __x.getNode();
-			__end_node_ = __x.getEndNode();
+		}
+
+		node_pointer base( ) const { return __node_ ; }
+		node_pointer end_base( ) const { return __end_node_ ; }
+		
+		mapIterator& operator=( const mapIterator & __x )
+		{
+			if ( this != &__x)
+			{
+				__node_ = __x.base();
+				__end_node_ = __x.end_base();
+			}
 			return *this;
 		}
 
@@ -149,7 +160,7 @@ namespace ft
 		
 	};
 
-	template < typename _N1, typename _V1, typename _N2, typename _V2 >
+	template < typename _N1, typename _N2, typename _V1, typename _V2 >
 	bool operator== ( const ft::mapIterator<_N1, _V1> __x, const ft::mapIterator<_N2, _V2> __y )
 	{
 		return __x.getNode() == __y.getNode() ;
@@ -161,7 +172,7 @@ namespace ft
 		return __x.getNode() < __y.getNode();
 	}
 
-	template < typename _N1, typename _V1, typename _N2, typename _V2 >
+	template < typename _N1, typename _N2, typename _V1, typename _V2 >
 	bool operator!= ( const ft::mapIterator<_N1, _V1> __x, const ft::mapIterator<_N2, _V2> __y )
 	{
 		return !( __x == __y);

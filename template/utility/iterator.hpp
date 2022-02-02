@@ -128,7 +128,7 @@ class reverse_iterator
 				typedef typename ft::iterator_traits<iterator_type>::reference				reference;
 
 				/* Default constructor  */
-				reverse_iterator() : current(ft::nullptr_t) {}
+				reverse_iterator() : current() {}
 				explicit reverse_iterator(_Iter __x) : current(__x) {}
 
 				/* Copy constructor */
