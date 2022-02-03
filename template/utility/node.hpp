@@ -17,19 +17,19 @@ struct Node
 	Node*				right;
 	Node*				left;
 
-	Node( T const &  __val = T() )
+	Node( T const &  __val , Node *__nill )
 	: content(__val),
 	  black( false ),
-	  parent( ft::nullptr_t ),
-	  right( ft::nullptr_t ),
-	  left( ft::nullptr_t ){}
+	  parent( __nill ),
+	  right( __nill ),
+	  left( __nill ){}
 
 	Node( Node const &other )
 	: content( other.content ),
-	  black( false ),
-	  parent( ft::nullptr_t ),
-	  right( ft::nullptr_t ),
-	  left( ft::nullptr_t ){}
+	  black( other.black ),
+	  parent( other.parent ),
+	  right( other.right),
+	  left( other.left ){}
 
 	~Node(){}
 

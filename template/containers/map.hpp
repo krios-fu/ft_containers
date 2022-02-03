@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:08 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/03 00:03:42 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/03 01:53:00 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ class map
 	void swap( map& __other )
 	{
 		__swap( __comp_alloc, __other.__comp_alloc );
-		__tree_.swap( __other.__tree_ );
+		__tree_.swap(__other.__tree_);
 	}
 
 
@@ -296,14 +296,7 @@ class map
 	template< typename _Key, typename _Tp, typename _Compare, typename _Alloc >
 	bool operator==( const ft::map<_Key, _Tp, _Compare, _Alloc > &__x, const ft::map<_Key, _Tp, _Compare, _Alloc > &__y)
 	{
-
-		typename ft::map<_Key, _Tp, _Compare, _Alloc>::const_iterator	first1 = __x.begin();
-		typename ft::map<_Key, _Tp, _Compare, _Alloc>::const_iterator	first2 = __y.begin();
-		for (;first1 != __x.end() && first2 != __y.end(); first1++, first2++)
-			if (*first1 != *first2)
-				return (false);
-		return (first1 == __x.end() && first2 == __y.end());
-		// return ft::equal( __x.begin(), __x.end(), __y.begin() );
+		return __x.size() == __y.size() && ft::equal( __x.begin(), __x.end(), __y.begin() );
 	}
 
 
