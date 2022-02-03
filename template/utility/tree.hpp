@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/03 03:23:06 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:59:44 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,10 +178,10 @@ namespace ft
 		{
 			pointer tmpNode = __node_alloc().allocate( 1 );
 			__node_alloc().construct( tmpNode, node_type(__x , __nil_ ) );
-			tmpNode->parent = __nil_;
-			tmpNode->right = __nil_;
-			tmpNode->left = __nil_;
-			tmpNode->black = false;
+			// tmpNode->parent = __nil_;
+			// tmpNode->right = __nil_;
+			// tmpNode->left = __nil_;
+			// tmpNode->black = false;
 			size()++;
 			return tmpNode;
 		}
@@ -191,9 +191,9 @@ namespace ft
 			pointer tmpNode = __node_alloc().allocate( 1 );
 			__node_alloc().construct( tmpNode, node_type( __x , __nil_ ) );
 			tmpNode->parent = __parent;
-			tmpNode->right = __nil_;
-			tmpNode->left = __nil_;
-			tmpNode->black = false;
+			// tmpNode->right = __nil_;
+			// tmpNode->left = __nil_;
+			// tmpNode->black = false;
 			size()++;
 			return tmpNode;
 		}
@@ -217,6 +217,8 @@ namespace ft
 		
 		void __right_rotate ( pointer __node )
 		{
+			if ( __node == __nil_ || __node->left== __nil_ )
+				return ;
 			pointer __tmp = __node->left;
 			__node->left = __tmp->right;
 
@@ -227,16 +229,18 @@ namespace ft
 			if ( __node->parent == __nil_ )
 				__root() = __tmp;
 
-			if ( __is_left_child( __node ) )
+			 if ( __is_left_child( __node ) )
 				__node->parent->left = __tmp;
 			else
 				__node->parent->right= __tmp;
-			__tmp->right = __node;
 			__node->parent = __tmp;
+			__tmp->right = __node;
 		}
 
 		void __left_rotate ( pointer __node )
 		{
+			if ( __node == __nil_ || __node->right == __nil_ )
+				return ;
 			pointer __tmp = __node->right;
 			__node->right = __tmp->left;
 
@@ -247,12 +251,12 @@ namespace ft
 			if ( __node->parent == __nil_ )
 				__root() = __tmp;
 
-			if ( __is_left_child( __node ) )
+			 if ( __is_left_child( __node ) )
 				__node->parent->left = __tmp;
 			else
 				__node->parent->right= __tmp;
-			__tmp->left = __node;
 			__node->parent = __tmp;
+			__tmp->left = __node;
 		}
 
 
@@ -425,7 +429,7 @@ namespace ft
 			}
 		}
 
-		void __copy_tree (pointer __root , pointer __nill )
+/* 		void __copy_tree (pointer __root , pointer __nill )
 		{
 			if ( __root != __nill )
 			{
@@ -435,7 +439,7 @@ namespace ft
 				__copy_tree(__root->left, __nill );
 				__copy_tree(__root->right, __nill );
 			}
-		}
+		} */
 	public:
 
 		explicit tree ( const value_compare & __comp = value_compare(), const allocator_type & __node_alloc_ = allocator_type() )
@@ -444,13 +448,13 @@ namespace ft
 		{
 			__size_ = 0;
 			__nil_ = __node_alloc().allocate( 1 );
-			// __node_alloc().construct( __nil_, node_type() );
 			__nil_->black = true;
 			__nil_->parent = __nil_;
 			__nil_->right = __nil_;
 			__nil_->left = __nil_;
 			__end_alloc_.first = __nil_;
-			__root() = __nil_;
+			// __node_alloc().construct( __nil_, node_type( value_type(), __nil_ ) );
+			__root_ = __nil_;
 		}
 
 		tree( const tree& __other )
@@ -458,7 +462,7 @@ namespace ft
 			*this = __other;
 		}
 
-		tree& operator= (const tree& __other )
+	 	tree& operator= (const tree& __other )
 		{
 			if ( this != &__other )
 			{
@@ -479,7 +483,7 @@ namespace ft
 				__copy_tree( __other.__root_, __other.__nil_ );
 			}
 			return *this;
-		} 
+		}  
 
 		~tree ()
 		{
@@ -510,7 +514,7 @@ namespace ft
 		{
 			pointer __dNode = __find( __x );
 
-			if (__dNode == __nil_ )
+			if ( __dNode == __nil_ )
 				return ;
 			pointer __hole = (  __dNode->left == __nil_ ||
 								__dNode->right == __nil_ ) ?
@@ -554,9 +558,12 @@ namespace ft
 					__hole->right->parent = __hole;
 				__hole->black = __dNode->black;
 				if ( __root() == __dNode )
+				{
 					__root() = __hole;
+				}
 			}
 				__tdestroy_alloc_node( __dNode );
+				reWriteNill();
 				size()--;
 			if ( __colorRemove && __root() != __nil_ )
 			{
@@ -566,10 +573,6 @@ namespace ft
 				else
 					__balance_tree_after_remove( __uncle, __childHole );
 			}
-					__root()->parent = __nil_;
-					__nil_->parent = __nil_;
-					__nil_->left = __root();
-					__nil_->right = __root();
 
 		}
 
@@ -578,7 +581,9 @@ namespace ft
 			if ( __root() == __nil_ )
 			{
 				__root() = __tconstruct_node( __x );
-				__root()->parent = __nil_;
+				// __root()->parent = __nil_;
+				// __root()->left = __nil_;
+				// __root()->right = __nil_;
 				__nil_->parent = __nil_;
 				__nil_->left = __root();
 				__nil_->right = __root();
@@ -603,21 +608,12 @@ namespace ft
 						__checkLeaf.first = __checkLeaf.first->left;
 						
 					}
-
-					__root()->parent = __nil_;
-					__nil_->parent = __nil_;
-					__nil_->left = __root();
-					__nil_->right = __root();
+					reWriteNill();
 					__balance_tree_after_insert( __root(), __checkLeaf.first );
 					return ft::make_pair( iterator(__checkLeaf.first, __nil_ ), true );
 				}
-				
-					__root()->parent = __nil_;
-					__nil_->parent = __nil_;
-					__nil_->left = __root();
-					__nil_->right = __root();
+				reWriteNill();
 				return ft::make_pair( iterator( __checkLeaf.first, __nil_ ), false );
-;
 			}
 		}
 		
@@ -635,10 +631,17 @@ namespace ft
 		}
 
 
+		void reWriteNill() const 
+		{
+			__nil_->parent = __nil_;
+			__nil_->right = __root_;
+			__nil_->left = __root_;
+			__root_->parent = __nil_;
+		}
 
-		iterator		begin() { return iterator( __child_min( __root_ ), __nil_ ); }
-		iterator		end() { return iterator(__nil_, __nil_); }
-		const_iterator	begin() const { return const_iterator( __child_min( __root_ ), __nil_); }
+		iterator		begin() {  return iterator( __child_min( __root_ ), __nil_ ); }
+		iterator		end() {  return iterator(__nil_, __nil_); }
+		const_iterator	begin() const {return const_iterator( __child_min( __root_ ), __nil_); }
 		const_iterator	end() const { return const_iterator( __nil_ , __nil_); }
 
 		reverse_iterator		rbegin() { return reverse_iterator( end() ); }

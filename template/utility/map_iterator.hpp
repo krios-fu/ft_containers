@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:15:45 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/03 03:10:05 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/03 17:32:52 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,12 @@ namespace ft
 
 		node_pointer __child_min ( node_pointer __x ) const 
 		{
-			
+			// std::cout << __end_node_ << "\n" << __end_node_->left << "\n" << __end_node_->right << std::endl;
+			// std::cout << "----------ROOT-----------\n";
+			// std::cout << __node_ << "\n" << __node_->left << "\n" << __node_->right << std::endl;
+			// std::cout << "---------------------\n";
+
+
 			while ( __x->left != __end_node_ )
 			{
 				__x = __x->left;
@@ -115,7 +120,7 @@ namespace ft
 
 		mapIterator& operator++()
 		{
-			if ( __node_->right != __end_node_ )
+			if ( __node_ != __end_node_ && __node_->right != __end_node_ )
 			{
 				__node_ = __child_min( __node_->right );
 				return *this;
@@ -133,13 +138,14 @@ namespace ft
 		mapIterator operator++(int)
 		{
 			mapIterator tmp( *this );
-			++(*this);
+			// ++(*this);
+			operator++();
 			return tmp;
 		}
 
 		mapIterator& operator--()
 		{
-			if ( __node_->left != __end_node_ )
+			if ( __node_ != __end_node_ && __node_->left != __end_node_ )
 			{
 				__node_ =  __child_max( __node_->left );
 				return *this;
@@ -156,7 +162,9 @@ namespace ft
 		mapIterator operator--(int)
 		{
 			mapIterator tmp( *this );
-			--(*this);
+			// --(*this);
+			operator--();
+			
 			return tmp;
 		}
 		
