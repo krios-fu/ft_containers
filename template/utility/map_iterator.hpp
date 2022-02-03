@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 17:15:45 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/03 17:32:52 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:33:40 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ namespace ft
 			// std::cout << "----------ROOT-----------\n";
 			// std::cout << __node_ << "\n" << __node_->left << "\n" << __node_->right << std::endl;
 			// std::cout << "---------------------\n";
-
-
 			while ( __x->left != __end_node_ )
 			{
 				__x = __x->left;
@@ -85,8 +83,8 @@ namespace ft
 
 		template< typename _NodePtr, typename _ValueT >
 		mapIterator ( const mapIterator<_NodePtr, _ValueT> & __x )
-		: __node_(__x.base() ),
-		  __end_node_(__x.end_base() )
+		: __node_( __x.base() ),
+		  __end_node_( __x.end_base() )
 		{
 		}
 
@@ -120,19 +118,18 @@ namespace ft
 
 		mapIterator& operator++()
 		{
-			if ( __node_ != __end_node_ && __node_->right != __end_node_ )
+			if ( __node_->right != __end_node_ )
 			{
 				__node_ = __child_min( __node_->right );
-				return *this;
 			}
 			else
 			{
-				while ( !__is_left_child( __node_ ) )
+				while (  !__is_left_child( __node_ ) )
 					__node_ = __node_->parent;
 				__node_ = __node_->parent;
-				return *this;
-				
+			
 			}
+				return *this;
 		}
 
 		mapIterator operator++(int)
@@ -145,18 +142,17 @@ namespace ft
 
 		mapIterator& operator--()
 		{
-			if ( __node_ != __end_node_ && __node_->left != __end_node_ )
+			if (  __node_->left != __end_node_ )
 			{
 				__node_ =  __child_max( __node_->left );
-				return *this;
 			}
 			else
 			{
 				while ( __is_left_child( __node_ ) )
 					__node_ = __node_->parent;
 				__node_ = __node_->parent;
-				return *this;
 			}
+				return *this;
 		}
 
 		mapIterator operator--(int)

@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:08 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/03 13:45:28 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:42:43 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,13 +190,13 @@ class map
 
 	void erase ( iterator __pos )
 	{
-		__tree_.remove( *__pos );
+		__tree_.remove( __pos.base() );
 	}
 
 	void erase( iterator __first, iterator __last )
 	{
 		for (; __first != __last; )
-			erase( __first++ );
+			__tree_.remove( (__first++).base() );
 	}
 
 	size_type erase( const key_type & __k )
@@ -205,7 +205,7 @@ class map
 
 		if ( __f != end() )
 		{
-			__tree_.remove( *__f );
+			__tree_.remove( __f.base() );
 			return 1;
 		}
 		return 0;

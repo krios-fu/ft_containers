@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/03 16:59:44 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:43:50 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ namespace ft
 		pointer __end_node() { return __end_alloc_.first; }
 		// const_pointer &__end_node() const { return static_cast<const_pointer>(__end_alloc_.first); }
 
-		pointer & __root() { return __root_; };
-		const_pointer & __root() const { return __root_; };
+		// pointer & __root_ { return __root_; };
+		// const_pointer & __root_ const { return __root_; };
 
 		bool __is_left_child( pointer __x )
 		{
@@ -78,7 +78,7 @@ namespace ft
 			return __x;
 		}
 
-		const_pointer __child_min ( pointer __x) const 
+	 	const_pointer __child_min ( const_pointer __x) const 
 		{
 			while ( __x->left != __nil_ )
 				__x = __x->left;
@@ -120,10 +120,10 @@ namespace ft
 					__tmp = __tmp->right;
 				else if ( __compare_( __x, __tmp->content ) )
 					__tmp = __tmp->left;
-				else
-					return __tmp;
+				 else
+				 	return __tmp;
 			}
-			return __nil_ ;
+			return __tmp;
 		}
 
 		const_pointer __find ( value_type const & __x ) const
@@ -182,7 +182,7 @@ namespace ft
 			// tmpNode->right = __nil_;
 			// tmpNode->left = __nil_;
 			// tmpNode->black = false;
-			size()++;
+			__size()++;
 			return tmpNode;
 		}
 
@@ -194,7 +194,7 @@ namespace ft
 			// tmpNode->right = __nil_;
 			// tmpNode->left = __nil_;
 			// tmpNode->black = false;
-			size()++;
+			__size()++;
 			return tmpNode;
 		}
 		void __tdestroy_alloc_node( pointer __node )
@@ -227,7 +227,10 @@ namespace ft
 			__tmp->parent = __node->parent;
 
 			if ( __node->parent == __nil_ )
-				__root() = __tmp;
+			{
+				__root_ = __tmp;
+				reWriteNill();
+			}
 
 			 if ( __is_left_child( __node ) )
 				__node->parent->left = __tmp;
@@ -249,7 +252,10 @@ namespace ft
 			__tmp->parent = __node->parent;
 
 			if ( __node->parent == __nil_ )
-				__root() = __tmp;
+			{
+				__root_ = __tmp;
+				reWriteNill();
+			}
 
 			 if ( __is_left_child( __node ) )
 				__node->parent->left = __tmp;
@@ -349,17 +355,18 @@ namespace ft
 						__uncle->parent->black = false;
 						__left_rotate ( __uncle->parent );
 
-						if ( __root() == __uncle->left )
-							__root() = __uncle;
+						if ( __root_ == __uncle->left )
+							__root_ = __uncle;
 						__uncle = __uncle->left->right;
 					}
 					
-					if ( __uncle->left->black && __uncle->right->black )
+					if ((__uncle->left == __nil_ ||  __uncle->left->black )&& 
+						(__uncle->right == __nil_ && __uncle->right->black ))
 					{
 						__uncle->black = false;
 						__childHole = __uncle->parent;
 
-						if ( __childHole == __root() || !__childHole->black )
+						if ( __childHole == __root_ || !__childHole->black )
 						{
 							__childHole->black = true;
 							break;
@@ -392,16 +399,17 @@ namespace ft
 						__uncle->parent->black = false;
 						__right_rotate( __uncle->parent );
 						
-						if ( __root() == __uncle->right )
-							__root() = __uncle;
+						if ( __root_ == __uncle->right )
+							__root_ = __uncle;
 						__uncle = __uncle->right->left;
 					}
-					if ( __uncle->left->black && __uncle->right->black )
+					if ((__uncle->left == __nil_ ||  __uncle->left->black )&& 
+						(__uncle->right == __nil_ && __uncle->right->black ))
 					{
 						__uncle->black = false;
 						__childHole = __uncle->parent;
 
-						if ( !__childHole->black ||  __childHole == __root()   )
+						if ( !__childHole->black ||  __childHole == __root_   )
 						{
 							__childHole->black = true;
 							break;
@@ -448,21 +456,21 @@ namespace ft
 		{
 			__size_ = 0;
 			__nil_ = __node_alloc().allocate( 1 );
+			__node_alloc().construct( __nil_, node_type( value_type(), __nil_ ) );
 			__nil_->black = true;
 			__nil_->parent = __nil_;
 			__nil_->right = __nil_;
 			__nil_->left = __nil_;
 			__end_alloc_.first = __nil_;
-			// __node_alloc().construct( __nil_, node_type( value_type(), __nil_ ) );
 			__root_ = __nil_;
 		}
 
-		tree( const tree& __other )
+	/* 	tree( const tree& __other )
 		{
 			*this = __other;
-		}
+		} */
 
-	 	tree& operator= (const tree& __other )
+/* 	 	tree& operator= (const tree& __other )
 		{
 			if ( this != &__other )
 			{
@@ -478,16 +486,16 @@ namespace ft
 				__nil_->right = __nil_;
 				__nil_->left = __nil_;
 				// __nil_ = __nil_;
-				__root() = __nil_;
+				__root_ = __nil_;
 				__compare_ = __other.__compare_;
 				__copy_tree( __other.__root_, __other.__nil_ );
 			}
 			return *this;
-		}  
+		} */  
 
 		~tree ()
 		{
-			__tdestroy_alloc_tree( __root() );
+			__tdestroy_alloc_tree( __root_ );
 			__tdestroy_alloc_node( __nil_ );
 		}
 
@@ -510,16 +518,13 @@ namespace ft
 				}
 			}
 
-		void remove( value_type const & __x )
+		void remove( pointer  __dNode )
 		{
-			pointer __dNode = __find( __x );
 
-			if ( __dNode == __nil_ )
-				return ;
 			pointer __hole = (  __dNode->left == __nil_ ||
 								__dNode->right == __nil_ ) ?
 								__dNode :
-								__predecessor ( __dNode );
+								__successor ( __dNode );
 
 			pointer __childHole  = __hole->left != __nil_ ? __hole->left : __hole->right;
 
@@ -531,10 +536,10 @@ namespace ft
 			if ( __is_left_child( __hole ) )
 			{
 				__hole->parent->left = __childHole;
-				if ( __hole != __root() )
+				if ( __hole != __root_ )
 					__uncle = __hole->parent->right;
 				else
-					__root() = __childHole;
+					__root_ = __childHole;
 			}
 			else
 			{
@@ -557,15 +562,15 @@ namespace ft
 				if ( __hole->right != __nil_ )
 					__hole->right->parent = __hole;
 				__hole->black = __dNode->black;
-				if ( __root() == __dNode )
+				if ( __root_ == __dNode )
 				{
-					__root() = __hole;
+						__root_ = __nil_;
 				}
 			}
 				__tdestroy_alloc_node( __dNode );
 				reWriteNill();
-				size()--;
-			if ( __colorRemove && __root() != __nil_ )
+				__size()--;
+			if ( __colorRemove && __root_ != __nil_ )
 			{
 				
 				if ( __childHole != __nil_ )
@@ -578,21 +583,21 @@ namespace ft
 
 		ft::pair< iterator, bool> insert ( value_type const & __x )
 		{
-			if ( __root() == __nil_ )
+			if ( __root_ == __nil_ )
 			{
-				__root() = __tconstruct_node( __x );
-				// __root()->parent = __nil_;
-				// __root()->left = __nil_;
-				// __root()->right = __nil_;
+				__root_ = __tconstruct_node( __x );
+				// __root_->parent = __nil_;
+				// __root_->left = __nil_;
+				// __root_->right = __nil_;
 				__nil_->parent = __nil_;
-				__nil_->left = __root();
-				__nil_->right = __root();
-				__root()->black = true;
+				__nil_->left = __root_;
+				__nil_->right = __root_;
+				__root_->black = true;
 				return ft::make_pair( iterator( __root_, __nil_ ), true );
 			}
 			else
 			{
-				ft::pair< pointer, bool > __checkLeaf = __treeLeaf( __root(), __x );
+				ft::pair< pointer, bool > __checkLeaf = __treeLeaf( __root_, __x );
 
 				if ( __checkLeaf.second )
 				{
@@ -608,8 +613,8 @@ namespace ft
 						__checkLeaf.first = __checkLeaf.first->left;
 						
 					}
+					__balance_tree_after_insert( __root_, __checkLeaf.first );
 					reWriteNill();
-					__balance_tree_after_insert( __root(), __checkLeaf.first );
 					return ft::make_pair( iterator(__checkLeaf.first, __nil_ ), true );
 				}
 				reWriteNill();
@@ -617,8 +622,10 @@ namespace ft
 			}
 		}
 		
-		size_type& size() { return __size_; }
-		const size_type& size() const { return __size_; }
+		size_type& __size() { return __size_; }
+		const size_type& __size() const { return __size_; }
+
+		size_type size() const { return __size_ ; }
 
 		iterator find ( value_type const & __x )
 		{
@@ -637,6 +644,7 @@ namespace ft
 			__nil_->right = __root_;
 			__nil_->left = __root_;
 			__root_->parent = __nil_;
+			__nil_->black = true;
 		}
 
 		iterator		begin() {  return iterator( __child_min( __root_ ), __nil_ ); }
@@ -656,11 +664,11 @@ namespace ft
 		void clear()
 		{
 			__tdestroy_alloc_tree( __root_ );
-			size() = 0;
-			__root() = __nil_;
+			__size() = 0;
+			__root_ = __nil_;
 		}
 
-		bool empty() const { return ( size() ) ? false : true; }
+		bool empty() const { return ( __size() ) ? false : true; }
 		allocator_type get_allocator() const { return __node_alloc(); }
 
 		void	swap( tree& __other_)

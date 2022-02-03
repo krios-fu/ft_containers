@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 19:52:14 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/02 21:33:30 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/03 22:26:09 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,43 @@ int main ()
 
 	
 
-	for (int i = 4; i < 20 ; i++ )
+	for (int i = 0; i < 10; i++ )
 		map1[i] = i;
 
 
 
 	// map2 = map1;
 	  map1.print();
+
+	  map1.erase( ++map1.begin() );
+	  map1.print();
+
 	  map1.erase(map1.begin());
 	  map1.print();
+
+	  map1.erase(--map1.end());
+	  map1.print();
+
+	  map1.erase( map1.begin(), ++(++(++map1.begin())));
+	  map1.print();
+
+
+		std::cout << (map1.end())->first << std::endl;
+
+		// std::cout << (--(--(--map1.end())))->first << std::endl;
+	//   map1.erase(--map1.end());
+	//   map1.erase(--map1.end());
+	//   map1.erase(--map1.end());
+
+
+		
+
+	  map1.erase (--(--(--map1.end())), --map1.end());
+	// map1.erase(map1.end() , map1.begin());
+		std::cout << (--map1.end())->first << std::endl;
+	  
+
+	   map1.print();
 
 
 
@@ -60,10 +88,10 @@ int main ()
 	//  map2.clear();
 	//  map2.print();
 
+	
+	
 
 
-	 std::cout << "SIZE : " << map1.max_size() << std::endl;
-	 std::cout << "SIZE : " << map2.max_size() << std::endl;
 
 
 
