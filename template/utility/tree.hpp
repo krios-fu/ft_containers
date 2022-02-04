@@ -6,7 +6,7 @@
 /*   By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 18:19:01 by krios-fu          #+#    #+#             */
-/*   Updated: 2022/02/03 22:43:50 by krios-fu         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:44:18 by krios-fu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -524,7 +524,7 @@ namespace ft
 			pointer __hole = (  __dNode->left == __nil_ ||
 								__dNode->right == __nil_ ) ?
 								__dNode :
-								__successor ( __dNode );
+								__predecessor ( __dNode );
 
 			pointer __childHole  = __hole->left != __nil_ ? __hole->left : __hole->right;
 
@@ -563,9 +563,7 @@ namespace ft
 					__hole->right->parent = __hole;
 				__hole->black = __dNode->black;
 				if ( __root_ == __dNode )
-				{
-						__root_ = __nil_;
-				}
+						__root_ = __hole;
 			}
 				__tdestroy_alloc_node( __dNode );
 				reWriteNill();
@@ -573,9 +571,9 @@ namespace ft
 			if ( __colorRemove && __root_ != __nil_ )
 			{
 				
-				if ( __childHole != __nil_ )
-					__childHole->black = true;
-				else
+				// if ( __childHole != __nil_ )
+				// 	__childHole->black = true;
+				// else
 					__balance_tree_after_remove( __uncle, __childHole );
 			}
 
